@@ -11,6 +11,16 @@
       "development": "./src/index.ts",
       "import": "./dist/rinjs.js",
       "require": "./dist/rinjs.cjs"
+    },
+    "./jsx-runtime": {
+      "types": "./src/jsx-runtime.ts",
+      "development": "./src/jsx-runtime.ts",
+      "import": "./dist/jsx-runtime.js"
+    },
+    "./jsx-dev-runtime": {
+      "types": "./src/jsx-runtime.ts",
+      "development": "./src/jsx-runtime.ts",
+      "import": "./dist/jsx-runtime.js"
     }
   },
   "keywords": [],
