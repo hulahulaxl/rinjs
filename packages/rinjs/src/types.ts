@@ -1,7 +1,18 @@
-export type Component<P = Record<string, unknown>> = (props: P) => VNode;
+export type ComponentContext = {
+  rerender: () => void;
+  onMount: (cb: () => void) => void;
+  onUnmount: (cb: () => void) => void;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Component<P = any> = (
+  props: P,
+  ctx: ComponentContext
+) => VNode | (() => VNode);
 
 export type VNode = {
-  type: keyof HTMLElementTagNameMap | Component<Record<string, unknown>>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  type: string | Component<any>;
   props: Record<string, unknown>;
   children: (VNode | Node)[];
 };

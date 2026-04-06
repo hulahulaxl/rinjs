@@ -1,4 +1,4 @@
-import type { VNode } from "./types";
+import type { ComponentContext, VNode } from "./types";
 
 function normalizeChildren(children: unknown[]): (VNode | Node)[] {
   return children.flat().map(c => {
@@ -58,10 +58,18 @@ export namespace JSX {
     children: {}; // eslint-disable-line @typescript-eslint/no-empty-object-type
   }
 
-  export type Component<P = Record<string, unknown>> = (props: P) => Element;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  export type ElementType = string | Component<any>;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  export type Component<P = any> = (
+    props: P,
+    ctx: ComponentContext
+  ) => Element | (() => Element);
 
   export interface Element {
-    type: ElementType | Component<Record<string, unknown>>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    type: ElementType | Component<any>;
     props: Record<string, unknown>;
     children: (VNode | Node)[];
   }

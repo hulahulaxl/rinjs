@@ -1,9 +1,49 @@
-import type { VNode, Component } from "./types";
+import type { Component, ComponentContext, VNode } from "./types";
 
 export function renderNode(vnode: VNode): Node {
   if (typeof vnode.type === "function") {
-    const component = vnode.type as Component<Record<string, unknown>>;
-    return renderNode(component(vnode.props));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const component = vnode.type as Component<any>;
+    let currentNode: Node;
+    let renderClosure: (() => VNode) | undefined;
+    const mountCallbacks: Array<() => void> = [];
+
+    const ctx: ComponentContext = {
+      rerender: () => {
+        if (!renderClosure) return;
+        const newVNode = renderClosure();
+        const newNode = renderNode(newVNode);
+        if (currentNode && currentNode.parentNode) {
+          currentNode.parentNode.replaceChild(newNode, currentNode);
+        }
+        currentNode = newNode;
+      },
+      onMount: (cb) => {
+        mountCallbacks.push(cb);
+      },
+      onUnmount: (_cb) => {
+        // v1: ignore teardown
+      }
+    };
+
+    const result = component(vnode.props, ctx);
+    let initialVNode: VNode;
+
+    if (typeof result === "function") {
+      renderClosure = result as () => VNode;
+      initialVNode = renderClosure();
+    } else {
+      initialVNode = result as VNode;
+    }
+
+    currentNode = renderNode(initialVNode);
+
+    // Call mount callbacks safely after the stack clears
+    setTimeout(() => {
+      mountCallbacks.forEach(cb => cb());
+    }, 0);
+
+    return currentNode;
   }
 
   const el = document.createElement(vnode.type);
