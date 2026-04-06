@@ -8,7 +8,7 @@ export type ComponentContext = {
 export type Component<P = any> = (
   props: P,
   ctx: ComponentContext
-) => VNode | (() => VNode);
+) => () => VNode;
 
 export type VNode = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

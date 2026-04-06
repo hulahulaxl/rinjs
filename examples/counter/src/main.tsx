@@ -24,10 +24,16 @@ function Counter({ initialValue }: Props, ctx: ComponentContext) {
       style={{ padding: "20px", border: "1px solid white", marginTop: "20px" }}
     >
       <p style={{ fontSize: "2rem" }}>Count: {count}</p>
-      
+
       <div style={{ marginBottom: "20px" }}>
-        <label style={{ display: "block", marginBottom: "10px" }}>Uncontrolled Input (should keep state during rerender):</label>
-        <input type="text" placeholder="Type here..." style={{ padding: "10px" }} />
+        <label style={{ display: "block", marginBottom: "10px" }}>
+          Uncontrolled Input (should keep state during rerender):
+        </label>
+        <input
+          type="text"
+          placeholder="Type here..."
+          style={{ padding: "10px" }}
+        />
       </div>
 
       <button onclick={decrement} style={{ padding: "10px 20px" }}>

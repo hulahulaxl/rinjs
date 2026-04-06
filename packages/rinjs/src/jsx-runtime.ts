@@ -65,7 +65,7 @@ export namespace JSX {
   export type Component<P = any> = (
     props: P,
     ctx: ComponentContext
-  ) => Element | (() => Element);
+  ) => () => Element;
 
   export interface Element {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

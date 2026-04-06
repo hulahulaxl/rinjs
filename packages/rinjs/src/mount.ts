@@ -7,42 +7,36 @@ export function renderNode(vnode: VNode): Node {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const component = vnode.type as Component<any>;
     let currentNode: Node;
-    let renderClosure: (() => VNode) | undefined;
+    let renderClosure: (() => VNode) | undefined = undefined;
     const mountCallbacks: Array<() => void> = [];
 
     const ctx: ComponentContext = {
       rerender: () => {
         if (!renderClosure) return;
         const newVNode = renderClosure();
-        
+
         // Retrieve the stored VNode footprint off the physical DOM node
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const oldVNode = (currentNode as any)._vnode as VNode;
-        
+
         // Seamlessly patch the physical DOM node recursively
         currentNode = patchDOM(currentNode, oldVNode, newVNode);
-        
+
         // Update the footprint to match the newly evaluated layout
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (currentNode as any)._vnode = newVNode;
       },
-      onMount: (cb) => {
+      onMount: cb => {
         mountCallbacks.push(cb);
       },
-      onUnmount: (_cb) => {
+      onUnmount: _cb => {
         // v1: ignore teardown
       }
     };
 
     const result = component(vnode.props, ctx);
-    let initialVNode: VNode;
-
-    if (typeof result === "function") {
-      renderClosure = result as () => VNode;
-      initialVNode = renderClosure();
-    } else {
-      initialVNode = result as VNode;
-    }
+    renderClosure = result;
+    const initialVNode = renderClosure();
 
     currentNode = renderNode(initialVNode);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

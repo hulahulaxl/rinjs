@@ -48,11 +48,11 @@ Suitable use cases:
 
 ## Functions Are Components
 
-Components are plain functions:
+Components are plain functions that return a render function:
 
 ```ts
 function App() {
-  return <div>Hello</div>
+  return () => <div>Hello</div>
 }
 ```
 
@@ -62,7 +62,7 @@ No classes. No decorators. No lifecycle APIs.
 
 ## Transparent Virtual DOM
 
-RinJS builds minimal Virtual DOM templates strictly to power local, fast DOM patching. 
+RinJS builds minimal Virtual DOM templates strictly to power local, fast DOM patching.
 
 > **Note:** RinJS may migrate entirely to an Ahead-Of-Time (AOT) compiler architecture in the future. This would completely eliminate the Virtual DOM and DOM-patching engines, allowing for true direct-to-DOM updates like Svelte or SolidJS, while preserving our explicit component execution model.
 
@@ -300,7 +300,7 @@ function Dropdown(props, ctx) {
     isOpen = !isOpen;
     ctx.rerender(); // Triggers update ONLY for this exact dropdown instance
   };
-  
+
   // Return a closure that handles future re-renders
   return () => (
     <div>
@@ -332,7 +332,7 @@ unmount("user-stats");
 
 # Lifecycles
 
-While RinJS eliminates complex implicit lifecycle scheduling, you will still need to perform side-effects predictably (like data fetching or WebGL rendering) when working with direct DOM mutations. 
+While RinJS eliminates complex implicit lifecycle scheduling, you will still need to perform side-effects predictably (like data fetching or WebGL rendering) when working with direct DOM mutations.
 
 Because component functions are executed only once to initialize state, your `ctx.onMount` logic is inherently immune to infinite-loop fetch bugs. RinJS saves and executes the inner closure returned by your component on every `ctx.rerender`:
 
@@ -342,7 +342,7 @@ function APIDataLoader(props, ctx) {
 
   // Triggers precisely once after the element first hits the DOM.
   ctx.onMount(() => {
-    fetch("/api/data").then(async (res) => {
+    fetch("/api/data").then(async res => {
       data = await res.json();
       ctx.rerender(); // Trigger local UI update
     });
