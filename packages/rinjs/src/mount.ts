@@ -71,6 +71,11 @@ export function renderNode(vnode: VNode): Node {
       continue;
     }
 
+    if (key === "ref" && typeof value === "function") {
+      setTimeout(() => value(el), 0);
+      continue;
+    }
+
     if (key === "style" && typeof value === "object") {
       Object.assign(el.style, value);
       continue;

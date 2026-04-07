@@ -39,6 +39,11 @@ function updateProps(
       continue;
     }
 
+    if (key === "ref" && typeof newValue === "function") {
+      setTimeout(() => newValue(el), 0);
+      continue;
+    }
+
     if (key === "style" && typeof newValue === "object") {
       Object.assign(el.style, newValue as Record<string, string>);
       continue;

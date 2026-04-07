@@ -7,14 +7,23 @@ type Props = {
 function Counter({ initialValue }: Props, ctx: ComponentContext) {
   // Initialization
   let count = initialValue;
+  let inputEl: HTMLInputElement;
+
+  ctx.onMount(() => {
+    inputEl.value = "1";
+  });
 
   const increment = () => {
-    count++;
+    const value = Number(inputEl.value);
+
+    count += value;
     ctx.rerender();
   };
 
   const decrement = () => {
-    count--;
+    const value = Number(inputEl.value);
+
+    count -= value;
     ctx.rerender();
   };
 
@@ -30,10 +39,10 @@ function Counter({ initialValue }: Props, ctx: ComponentContext) {
           Uncontrolled Input (should keep state during rerender):
         </label>
         <input
+          ref={el => (inputEl = el)}
           type="text"
           placeholder="Type here..."
           style={{ padding: "10px" }}
-          oninput={increment}
         />
       </div>
 

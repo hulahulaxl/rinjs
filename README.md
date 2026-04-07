@@ -238,7 +238,7 @@ Children pass through JSX normally:
 
 ```tsx
 function Card(props) {
-  return <div>{props.children}</div>;
+  return () => <div>{props.children}</div>;
 }
 ```
 
@@ -246,6 +246,28 @@ Usage:
 
 ```tsx
 <Card>Content here</Card>
+```
+
+---
+
+# Refs
+
+To directly access a physical HTML Node (e.g. for interacting with a `<canvas>` element or a localized third-party charting library), you can securely bind a **function closure** directly to the `ref` prop. 
+
+RinJS executes the function right after the component paints that node cleanly to the DOM:
+
+```tsx
+function CanvasComponent(props, ctx) {
+  let canvasEl = null;
+
+  ctx.onMount(() => {
+    // Guaranteed to be physically mapped here because `onMount` runs safely after execution!
+    const context = canvasEl.getContext("2d");
+    context.fillRect(10, 10, 100, 100);
+  });
+
+  return () => <canvas ref={(el) => canvasEl = el} width="200" height="200" />;
+}
 ```
 
 ---
