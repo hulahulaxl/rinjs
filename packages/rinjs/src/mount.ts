@@ -9,6 +9,7 @@ export function renderNode(vnode: VNode): Node {
     let currentNode: Node;
     let renderClosure: (() => VNode) | undefined = undefined;
     const mountCallbacks: Array<() => void> = [];
+    const unmountCallbacks: Array<() => void> = [];
 
     const ctx: ComponentContext = {
       rerender: () => {
@@ -29,8 +30,8 @@ export function renderNode(vnode: VNode): Node {
       onMount: cb => {
         mountCallbacks.push(cb);
       },
-      onUnmount: _cb => {
-        // v1: ignore teardown
+      onUnmount: cb => {
+        unmountCallbacks.push(cb);
       }
     };
 
@@ -41,6 +42,8 @@ export function renderNode(vnode: VNode): Node {
     currentNode = renderNode(initialVNode);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (currentNode as any)._vnode = initialVNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (currentNode as any)._unmount = unmountCallbacks;
 
     // Call mount callbacks safely after the stack clears
     setTimeout(() => {

@@ -33,6 +33,7 @@ function Counter({ initialValue }: Props, ctx: ComponentContext) {
           type="text"
           placeholder="Type here..."
           style={{ padding: "10px" }}
+          oninput={increment}
         />
       </div>
 

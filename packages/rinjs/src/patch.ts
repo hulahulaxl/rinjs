@@ -1,5 +1,6 @@
 import type { VNode } from "./types";
 import { renderNode } from "./mount";
+import { executeUnmount } from "./unmount";
 
 function updateProps(
   el: HTMLElement,
@@ -61,6 +62,7 @@ export function patchDOM(
   if (oldVNode.type !== newVNode.type) {
     const newNode = renderNode(newVNode);
     if (domNode.parentNode) {
+      executeUnmount(domNode);
       domNode.parentNode.replaceChild(newNode, domNode);
     }
     return newNode;
@@ -99,7 +101,10 @@ export function patchDOM(
       el.appendChild(childOutput);
     } else if (oldChild && !newChild) {
       // Removed child
-      if (childNode) el.removeChild(childNode);
+      if (childNode) {
+        executeUnmount(childNode);
+        el.removeChild(childNode);
+      }
     } else if (oldChild && newChild) {
       if (oldChild instanceof Node || newChild instanceof Node) {
         if (oldChild instanceof Text && newChild instanceof Text) {
@@ -112,6 +117,7 @@ export function patchDOM(
           const newNode =
             newChild instanceof Node ? newChild : renderNode(newChild as VNode);
           if (childNode) {
+            executeUnmount(childNode);
             el.replaceChild(newNode, childNode);
           } else {
             el.appendChild(newNode);

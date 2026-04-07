@@ -318,14 +318,8 @@ To prevent memory leaks when components are removed dynamically, RinJS provides 
 ```ts
 import { unmount } from "rinjs";
 
-// Tear down a whole container
-unmount(document.getElementById("app"));
-
-// Tear down all instances of a specific Component
-unmount(Header);
-
-// Tear down elements tagged with a specific key
-unmount("user-stats");
+// Tear down a whole container explicitly (e.g. when unmounting the whole application)
+unmount(document.getElementById("app") as HTMLElement);
 ```
 
 ---
