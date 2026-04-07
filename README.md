@@ -281,12 +281,12 @@ function Header() {
 rerender(Header);
 ```
 
-2. **Rerender by Key string**: Updates specific elements or components tagged with an explicit `$key` property. Useful for highly specific or targeted updates.
+2. **Rerender by Group string**: Updates specific elements or components tagged with an explicit `group` property. Useful for highly specific or targeted updates.
 
 ```ts
 import { rerender } from "rinjs";
 
-// Component or element rendered with <section $key="user-stats" />
+// Component or element rendered with <section group="user-stats" />
 rerender("user-stats");
 ```
 

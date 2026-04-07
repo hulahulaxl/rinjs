@@ -1,4 +1,5 @@
 import type { Component, ComponentContext, VNode } from "./types";
+import { register } from "./rerender";
 
 import { patchDOM } from "./patch";
 
@@ -38,6 +39,10 @@ export function renderNode(vnode: VNode): Node {
     const result = component(vnode.props, ctx);
     renderClosure = result;
     const initialVNode = renderClosure();
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+    const deregister = register(vnode.type as Function, vnode.props.group as string | undefined, ctx.rerender);
+    unmountCallbacks.push(deregister);
 
     currentNode = renderNode(initialVNode);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
