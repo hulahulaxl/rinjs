@@ -33,6 +33,11 @@ function ProductCatalog() {
 
 // Targeted via the framework group attribute explicitly globally!
 function CartSidebar() {
+  const handleRemove = (index: number) => {
+    cartItems.splice(index, 1); // Mutates global state
+    rerender("cart-widget"); // Triggers internal re-calculation securely
+  };
+
   return () => {
     const totalCost = cartItems.reduce((acc, item) => acc + item.price, 0);
 
@@ -44,10 +49,18 @@ function CartSidebar() {
           <p style={{ color: "#888" }}>Cart is currently empty.</p>
         ) : (
           <ul style={{ listStyleType: "none", padding: "0" }}>
-            {cartItems.map(item => (
-              <li style={{ padding: "10px 0", borderBottom: "1px solid #222", display: "flex", justifyContent: "space-between" }}>
+            {cartItems.map((item, index) => (
+              <li style={{ padding: "10px 0", borderBottom: "1px solid #222", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span>{item.name}</span>
-                <span style={{ color: "#4CAF50" }}>${item.price}</span>
+                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                  <span style={{ color: "#4CAF50" }}>${item.price}</span>
+                  <button 
+                    onclick={() => handleRemove(index)}
+                    style={{ padding: "4px 8px", background: "#f44336", color: "white", border: "none", borderRadius: "3px", cursor: "pointer", fontSize: "0.8rem" }}
+                  >
+                    X
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
