@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "vite build",
+    "build": "pnpm -r run build",
+    "release": "changeset publish",
     "dev:counter-example": "cd examples/counter && npm run dev",
     "dev:todo-example": "cd examples/todo && npm run dev",
     "dev:global-example": "cd examples/global-state && npm run dev",
@@ -16,6 +17,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@changesets/cli": "^2.30.0",
     "@eslint/js": "^10.0.1",
     "@types/node": "^25.5.0",
     "eslint": "^10.1.0",
@@ -23,6 +25,7 @@
     "globals": "^17.4.0",
     "npm-check-updates": "^19.6.6",
     "prettier": "^3.8.1",
+    "tsup": "^8.5.1",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.57.2",
     "vite": "^8.0.3"

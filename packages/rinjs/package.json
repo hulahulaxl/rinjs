@@ -2,25 +2,32 @@
   "name": "rinjs",
   "version": "0.0.1",
   "type": "module",
-  "main": "dist/rinjs.cjs",
-  "module": "dist/rinjs.js",
+  "files": [
+    "dist",
+    "package.json",
+    "README.md"
+  ],
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup"
+  },
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "development": "./src/index.ts",
-      "import": "./dist/rinjs.js",
-      "require": "./dist/rinjs.cjs"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./jsx-runtime": {
-      "types": "./src/jsx-runtime.ts",
-      "development": "./src/jsx-runtime.ts",
-      "import": "./dist/jsx-runtime.js"
+      "types": "./dist/jsx-runtime.d.ts",
+      "import": "./dist/jsx-runtime.js",
+      "require": "./dist/jsx-runtime.cjs"
     },
     "./jsx-dev-runtime": {
-      "types": "./src/jsx-runtime.ts",
-      "development": "./src/jsx-runtime.ts",
-      "import": "./dist/jsx-runtime.js"
+      "types": "./dist/jsx-runtime.d.ts",
+      "import": "./dist/jsx-runtime.js",
+      "require": "./dist/jsx-runtime.cjs"
     }
   },
   "keywords": [],
