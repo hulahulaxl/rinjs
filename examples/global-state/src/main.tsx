@@ -15,7 +15,7 @@ function ProductCatalog() {
       <h2 style={{ borderBottom: "2px solid #333", paddingBottom: "10px", marginTop: "0" }}>Available Products</h2>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "20px" }}>
         {INITIAL_PRODUCTS.map(product => (
-          <div style={{ border: "1px solid #444", padding: "15px", borderRadius: "8px", background: "#1a1a1a", textAlign: "center" }}>
+          <div key={product.id} style={{ border: "1px solid #444", padding: "15px", borderRadius: "8px", background: "#1a1a1a", textAlign: "center" }}>
             <h3 style={{ marginTop: "0", fontSize: "1.1rem" }}>{product.name}</h3>
             <p style={{ color: "#4CAF50", fontWeight: "bold" }}>${product.price}</p>
             <button
@@ -50,7 +50,7 @@ function CartSidebar() {
         ) : (
           <ul style={{ listStyleType: "none", padding: "0" }}>
             {cartItems.map((item, index) => (
-              <li style={{ padding: "10px 0", borderBottom: "1px solid #222", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <li key={index} style={{ padding: "10px 0", borderBottom: "1px solid #222", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span>{item.name}</span>
                 <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                   <span style={{ color: "#4CAF50" }}>${item.price}</span>

@@ -108,48 +108,107 @@ export function patchDOM(
   const oldChildren = oldVNode.children;
   const newChildren = newVNode.children;
 
-  const maxLen = Math.max(oldChildren.length, newChildren.length);
+  const oldKeyed = new Map<string, { vnode: VNode; node: Node }>();
+  const oldUnkeyed: ({ vnode: VNode | Node; node: Node } | null)[] = [];
 
-  for (let i = 0; i < maxLen; i++) {
+  for (let i = 0; i < oldChildren.length; i++) {
     const oldChild = oldChildren[i];
-    const newChild = newChildren[i];
     const childNode = el.childNodes[i];
+    if (!childNode) continue;
 
-    if (!oldChild && newChild) {
-      // Added new child
-      const childOutput =
-        newChild instanceof Node ? newChild : renderNode(newChild as VNode);
-      el.appendChild(childOutput);
-    } else if (oldChild && !newChild) {
-      // Removed child
-      if (childNode) {
-        executeUnmount(childNode);
-        el.removeChild(childNode);
+    if (
+      oldChild &&
+      typeof oldChild === "object" &&
+      "props" in oldChild &&
+      oldChild.props &&
+      oldChild.props.key != null
+    ) {
+      oldKeyed.set(String(oldChild.props.key), {
+        vnode: oldChild as VNode,
+        node: childNode
+      });
+    } else {
+      oldUnkeyed.push({ vnode: oldChild, node: childNode });
+    }
+  }
+
+  let unkeyedIndex = 0;
+
+  for (let i = 0; i < newChildren.length; i++) {
+    const newChild = newChildren[i];
+    let matchedNode: Node | undefined;
+    let matchedOldVNode: VNode | Node | undefined;
+
+    if (
+      newChild &&
+      typeof newChild === "object" &&
+      "props" in newChild &&
+      newChild.props &&
+      newChild.props.key != null
+    ) {
+      const key = String(newChild.props.key);
+      const match = oldKeyed.get(key);
+      if (match) {
+        matchedNode = match.node;
+        matchedOldVNode = match.vnode;
+        oldKeyed.delete(key);
       }
-    } else if (oldChild && newChild) {
-      if (oldChild instanceof Node || newChild instanceof Node) {
-        if (oldChild instanceof Text && newChild instanceof Text) {
-          if (oldChild.nodeValue !== newChild.nodeValue) {
-            if (childNode instanceof Text) {
-              childNode.nodeValue = newChild.nodeValue;
+    } else {
+      if (unkeyedIndex < oldUnkeyed.length) {
+        const match = oldUnkeyed[unkeyedIndex];
+        if (match) {
+          matchedNode = match.node;
+          matchedOldVNode = match.vnode;
+          oldUnkeyed[unkeyedIndex] = null;
+        }
+        unkeyedIndex++;
+      }
+    }
+
+    let finalNode: Node;
+
+    if (!matchedNode || !matchedOldVNode) {
+      finalNode =
+        newChild instanceof Node ? newChild : renderNode(newChild as VNode);
+    } else {
+      if (matchedOldVNode instanceof Node || newChild instanceof Node) {
+        if (matchedOldVNode instanceof Text && newChild instanceof Text) {
+          if (matchedOldVNode.nodeValue !== newChild.nodeValue) {
+            if (matchedNode instanceof Text) {
+              matchedNode.nodeValue = newChild.nodeValue;
             }
           }
+          finalNode = matchedNode;
         } else {
-          const newNode =
+          finalNode =
             newChild instanceof Node ? newChild : renderNode(newChild as VNode);
-          if (childNode) {
-            executeUnmount(childNode);
-            el.replaceChild(newNode, childNode);
-          } else {
-            el.appendChild(newNode);
-          }
+          executeUnmount(matchedNode);
         }
       } else {
-        // Recursive patch
-        if (childNode) {
-          patchDOM(childNode, oldChild as VNode, newChild as VNode);
-        }
+        finalNode = patchDOM(
+          matchedNode,
+          matchedOldVNode as VNode,
+          newChild as VNode
+        );
       }
+    }
+
+    const referenceNode = el.childNodes[i] || null;
+    if (referenceNode !== finalNode) {
+      el.insertBefore(finalNode, referenceNode);
+    }
+  }
+
+  oldKeyed.forEach(match => {
+    executeUnmount(match.node);
+    if (match.node.parentNode) match.node.parentNode.removeChild(match.node);
+  });
+
+  for (let i = 0; i < oldUnkeyed.length; i++) {
+    const match = oldUnkeyed[i];
+    if (match) {
+      executeUnmount(match.node);
+      if (match.node.parentNode) match.node.parentNode.removeChild(match.node);
     }
   }
 

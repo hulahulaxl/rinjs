@@ -42,6 +42,7 @@ type DOMProps<K extends ElementType> = Omit<
   style?: Partial<CSSStyleDeclaration> | string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ref?: (el: any) => void;
+  key?: string | number;
 };
 
 type Props<K extends ElementType> = DOMProps<K> & {

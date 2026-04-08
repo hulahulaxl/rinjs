@@ -8,6 +8,7 @@ type Todo = {
 
 // <TodoItem />
 type TodoItemProps = {
+  key?: string | number;
   todo: Todo;
   toggleTodo: (id: number) => void;
   deleteTodo: (id: number) => void;
@@ -32,9 +33,16 @@ function TodoItem({ todo, toggleTodo, deleteTodo }: TodoItemProps) {
         style={{ marginRight: "10px", cursor: "pointer" }}
       />
       <span style={{ flexGrow: "1" }}>{todo.text}</span>
-      <button 
+      <button
         onclick={() => deleteTodo(todo.id)}
-        style={{ padding: "5px 10px", cursor: "pointer", background: "#f44336", color: "white", border: "none", borderRadius: "3px" }}
+        style={{
+          padding: "5px 10px",
+          cursor: "pointer",
+          background: "#f44336",
+          color: "white",
+          border: "none",
+          borderRadius: "3px"
+        }}
       >
         Delete
       </button>
@@ -52,9 +60,16 @@ type TodoListProps = {
 function TodoList({ todos, toggleTodo, deleteTodo }: TodoListProps) {
   return () => (
     <ul style={{ listStyleType: "none", padding: "0" }}>
-      {todos.length === 0 ? <p style={{ textAlign: "center", color: "#666" }}>No todos yet!</p> : null}
+      {todos.length === 0 ? (
+        <p style={{ textAlign: "center", color: "#666" }}>No todos yet!</p>
+      ) : null}
       {todos.map(todo => (
-        <TodoItem todo={todo} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
+        <TodoItem
+          key={todo.id}
+          todo={todo}
+          toggleTodo={toggleTodo}
+          deleteTodo={deleteTodo}
+        />
       ))}
     </ul>
   );
@@ -70,13 +85,13 @@ function TodoApp(_props: Record<string, unknown>, ctx: ComponentContext) {
 
   const addTodo = () => {
     if (!inputEl || !inputEl.value.trim()) return;
-    
+
     // Explicit mutation via pure JS data layout
     todos = [
       ...todos,
       { id: Date.now(), text: inputEl.value.trim(), completed: false }
     ];
-    
+
     inputEl.value = "";
     ctx.rerender(); // Broadcasts local state update mathematically downward
   };
@@ -94,30 +109,59 @@ function TodoApp(_props: Record<string, unknown>, ctx: ComponentContext) {
   };
 
   return () => (
-    <div style={{ maxWidth: "500px", margin: "0 auto", background: "#1a1a1a", padding: "20px", borderRadius: "8px", boxShadow: "0 4px 6px rgba(0,0,0,0.3)" }}>
+    <div
+      style={{
+        maxWidth: "500px",
+        margin: "0 auto",
+        background: "#1a1a1a",
+        padding: "20px",
+        borderRadius: "8px",
+        boxShadow: "0 4px 6px rgba(0,0,0,0.3)"
+      }}
+    >
       <h2 style={{ textAlign: "center", marginTop: "0" }}>RinJS Tasks</h2>
-      
+
       <div style={{ display: "flex", marginBottom: "20px" }}>
         <input
           ref={el => (inputEl = el)}
           type="text"
           placeholder="What needs to be done?"
-          style={{ flexGrow: "1", padding: "10px", border: "none", borderRadius: "4px 0 0 4px" }}
+          style={{
+            flexGrow: "1",
+            padding: "10px",
+            border: "none",
+            borderRadius: "4px 0 0 4px"
+          }}
           onkeydown={(e: KeyboardEvent) => {
             if (e.key === "Enter") addTodo();
           }}
         />
         <button
           onclick={addTodo}
-          style={{ padding: "10px 20px", background: "#4CAF50", color: "white", border: "none", borderRadius: "0 4px 4px 0", cursor: "pointer", fontWeight: "bold" }}
+          style={{
+            padding: "10px 20px",
+            background: "#4CAF50",
+            color: "white",
+            border: "none",
+            borderRadius: "0 4px 4px 0",
+            cursor: "pointer",
+            fontWeight: "bold"
+          }}
         >
           Add
         </button>
       </div>
 
       <TodoList todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
-      
-      <div style={{ marginTop: "20px", textAlign: "center", fontSize: "0.8rem", color: "#666" }}>
+
+      <div
+        style={{
+          marginTop: "20px",
+          textAlign: "center",
+          fontSize: "0.8rem",
+          color: "#666"
+        }}
+      >
         {todos.filter(t => !t.completed).length} items left
       </div>
     </div>
@@ -125,8 +169,18 @@ function TodoApp(_props: Record<string, unknown>, ctx: ComponentContext) {
 }
 
 mount(
-  <div style={{ background: "#000", color: "white", minHeight: "100vh", padding: "40px", fontFamily: "sans-serif" }}>
-    <h1 style={{ textAlign: "center", marginBottom: "40px" }}>State Management Example</h1>
+  <div
+    style={{
+      background: "#000",
+      color: "white",
+      minHeight: "100vh",
+      padding: "40px",
+      fontFamily: "sans-serif"
+    }}
+  >
+    <h1 style={{ textAlign: "center", marginBottom: "40px" }}>
+      State Management Example
+    </h1>
     <TodoApp />
   </div>,
   document.querySelector<HTMLDivElement>("#app")!
