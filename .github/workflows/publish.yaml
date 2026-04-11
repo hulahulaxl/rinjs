@@ -40,6 +40,9 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
+      - name: Sync README to Package
+        run: cp README.md packages/rin/README.md
+
       - name: Configure Git Setup
         run: |
           git config user.name "github-actions[bot]"
@@ -60,4 +63,5 @@ jobs:
 
       - name: Push Version Update to Main
         run: |
-          git push origin main --follow-tags
+          git push origin HEAD:main
+          git push origin --tags

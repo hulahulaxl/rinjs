@@ -1,6 +1,6 @@
 {
   "name": "rin-lib",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "files": [
     "dist",
@@ -35,5 +35,13 @@
   },
   "keywords": [],
   "author": "Hula Hula",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hulahulaxl/rin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hulahulaxl/rin/issues"
+  },
+  "homepage": "https://github.com/hulahulaxl/rin#readme"
 }
