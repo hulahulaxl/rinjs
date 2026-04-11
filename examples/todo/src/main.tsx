@@ -120,7 +120,7 @@ function TodoApp(_props: Record<string, unknown>, ctx: ComponentContext) {
         boxShadow: "0 4px 6px rgba(0,0,0,0.3)"
       }}
     >
-      <h2 style={{ textAlign: "center", marginTop: "0" }}>RinJS Tasks</h2>
+      <h1>Rin Todo Test</h1>
 
       <div style={{ display: "flex", marginBottom: "20px" }}>
         <input

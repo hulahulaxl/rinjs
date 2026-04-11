@@ -63,6 +63,7 @@ function CartSidebar() {
                 </div>
               </li>
             ))}
+            <h1>Rin Global State Test</h1>
           </ul>
         )}
         

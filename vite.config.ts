@@ -4,9 +4,9 @@ import { defineConfig } from "vite";
 export default defineConfig({
   build: {
     lib: {
-      entry: path.resolve(__dirname, "packages/rinjs/src/index.ts"),
-      name: "RinJS",
-      fileName: "rinjs",
+      entry: path.resolve(__dirname, "packages/rin/src/index.ts"),
+      name: "Rin",
+      fileName: "rin",
     },
   },
 });

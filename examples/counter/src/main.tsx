@@ -63,7 +63,7 @@ mount(
       padding: "40px"
     }}
   >
-    <h1>RinJS Counter Test</h1>
+    <h1>Rin Counter Test</h1>
     <Counter initialValue={50} />
   </div>,
   document.querySelector<HTMLDivElement>("#app")!
