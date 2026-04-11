@@ -7,7 +7,7 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "rinjs": ["packages/rinjs/src"]
+      "rin-lib": ["packages/rinjs/src"]
     },
 
     /* Bundler mode */

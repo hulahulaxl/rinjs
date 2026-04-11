@@ -1,4 +1,4 @@
-import { mount, type ComponentContext } from "rinjs";
+import { mount, type ComponentContext } from "rin-lib";
 
 type Todo = {
   id: number;

@@ -281,7 +281,7 @@ RinJS provides three primary APIs for rendering and updating the DOM explicitly.
 Mount your root application to the DOM:
 
 ```ts
-import { mount } from "rinjs";
+import { mount } from "rin-lib";
 
 mount(<App />, document.getElementById("app"));
 ```
@@ -293,7 +293,7 @@ RinJS does not use an automated Virtual DOM scheduler. Instead, reactivity is ex
 1. **Rerender by Component Reference**: Globally updates all active instances of a specific component function on the page.
 
 ```ts
-import { rerender } from "rinjs";
+import { rerender } from "rin-lib";
 
 function Header() {
   return <header>Local Time: {new Date().toLocaleTimeString()}</header>;
@@ -306,7 +306,7 @@ rerender(Header);
 2. **Rerender by Group string**: Updates specific elements or components tagged with an explicit `group` property. Useful for highly specific or targeted updates.
 
 ```ts
-import { rerender } from "rinjs";
+import { rerender } from "rin-lib";
 
 // Component or element rendered with <section group="user-stats" />
 rerender("user-stats");
@@ -338,7 +338,7 @@ function Dropdown(props, ctx) {
 To prevent memory leaks when components are removed dynamically, RinJS provides an explicit `unmount` API to clean up active trees and unbind listeners.
 
 ```ts
-import { unmount } from "rinjs";
+import { unmount } from "rin-lib";
 
 // Tear down a whole container explicitly (e.g. when unmounting the whole application)
 unmount(document.getElementById("app") as HTMLElement);
@@ -408,7 +408,7 @@ Example `tsconfig.json`:
 {
   "compilerOptions": {
     "jsx": "react-jsx",
-    "jsxImportSource": "rinjs"
+    "jsxImportSource": "rin-lib"
   }
 }
 ```
@@ -418,7 +418,7 @@ Example `tsconfig.json`:
 # Example Project Structure
 
 ```
-rinjs/
+rin-lib/
  ├── jsx-runtime.ts
  ├── types.ts
  ├── mount.ts

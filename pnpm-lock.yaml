@@ -44,7 +44,7 @@ importers:
 
   examples/counter:
     dependencies:
-      rinjs:
+      rin-lib:
         specifier: workspace:*
         version: link:../../packages/rinjs
     devDependencies:
@@ -57,7 +57,7 @@ importers:
 
   examples/global-state:
     dependencies:
-      rinjs:
+      rin-lib:
         specifier: workspace:*
         version: link:../../packages/rinjs
     devDependencies:
@@ -70,7 +70,7 @@ importers:
 
   examples/todo:
     dependencies:
-      rinjs:
+      rin-lib:
         specifier: workspace:*
         version: link:../../packages/rinjs
     devDependencies:
