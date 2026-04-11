@@ -46,7 +46,7 @@ importers:
     dependencies:
       rin-lib:
         specifier: workspace:*
-        version: link:../../packages/rinjs
+        version: link:../../packages/rin
     devDependencies:
       typescript:
         specifier: ~5.9.3
@@ -59,7 +59,7 @@ importers:
     dependencies:
       rin-lib:
         specifier: workspace:*
-        version: link:../../packages/rinjs
+        version: link:../../packages/rin
     devDependencies:
       typescript:
         specifier: ~5.9.3
@@ -72,7 +72,7 @@ importers:
     dependencies:
       rin-lib:
         specifier: workspace:*
-        version: link:../../packages/rinjs
+        version: link:../../packages/rin
     devDependencies:
       typescript:
         specifier: ~5.9.3
@@ -81,7 +81,7 @@ importers:
         specifier: ^8.0.1
         version: 8.0.3(@types/node@25.5.0)(esbuild@0.27.7)
 
-  packages/rinjs: {}
+  packages/rin: {}
 
 packages:
 

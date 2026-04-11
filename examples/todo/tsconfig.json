@@ -25,9 +25,9 @@
     "jsx": "react-jsx",
     "jsxImportSource": "rin-lib",
     "paths": {
-      "rin-lib": ["../../packages/rinjs/src/index.ts"],
-      "rin-lib/jsx-runtime": ["../../packages/rinjs/src/jsx-runtime.ts"],
-      "rin-lib/jsx-dev-runtime": ["../../packages/rinjs/src/jsx-runtime.ts"]
+      "rin-lib": ["../../packages/rin/src/index.ts"],
+      "rin-lib/jsx-runtime": ["../../packages/rin/src/jsx-runtime.ts"],
+      "rin-lib/jsx-dev-runtime": ["../../packages/rin/src/jsx-runtime.ts"]
     }
   },
   "include": ["src"]
