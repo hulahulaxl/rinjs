@@ -23,7 +23,12 @@
     "noUncheckedSideEffectImports": true,
 
     "jsx": "react-jsx",
-    "jsxImportSource": "rinjs"
+    "jsxImportSource": "rinjs",
+    "paths": {
+      "rinjs": ["../../packages/rinjs/src/index.ts"],
+      "rinjs/jsx-runtime": ["../../packages/rinjs/src/jsx-runtime.ts"],
+      "rinjs/jsx-dev-runtime": ["../../packages/rinjs/src/jsx-runtime.ts"]
+    }
   },
   "include": ["src"]
 }
