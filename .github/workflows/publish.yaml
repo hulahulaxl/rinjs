@@ -50,7 +50,17 @@ jobs:
 
       - name: Bump Version
         working-directory: ./packages/rin
-        run: npm version ${{ inputs.version_type }}
+        run: npm version ${{ inputs.version_type }} --no-git-tag-version
+
+      - name: Get New Version
+        id: vars
+        run: echo "tag_version=$(node -p "require('./packages/rin/package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Commit and Tag Version
+        run: |
+          git add .
+          git commit -m "v${{ steps.vars.outputs.tag_version }}"
+          git tag v${{ steps.vars.outputs.tag_version }}
 
       - name: Build Framework
         run: pnpm run build
