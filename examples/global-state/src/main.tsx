@@ -1,4 +1,4 @@
-import { mount, rerender } from "rinjs";
+import { mount, rerender } from "rin-lib";
 import { INITIAL_PRODUCTS, cartItems, type Product } from "./store";
 
 function ProductCatalog() {

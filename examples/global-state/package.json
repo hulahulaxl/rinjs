@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "rinjs": "workspace:*"
+    "rin-lib": "workspace:*"
   },
   "devDependencies": {
     "typescript": "~5.9.3",

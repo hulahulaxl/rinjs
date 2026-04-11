@@ -1,8 +1,8 @@
-# RinJS Documentation
+# Rin Documentation
 
 ## Overview
 
-**RinJS** is a minimal, TypeScript-first UI library for building reactive browser interfaces with a small runtime and predictable architecture.
+**Rin** is a minimal, TypeScript-first UI library for building reactive browser interfaces with a small runtime and predictable architecture.
 
 It focuses on:
 
@@ -12,7 +12,7 @@ It focuses on:
 - minimal abstraction
 - minimal virtual DOM
 
-RinJS targets developers who want component-based UI without framework overhead.
+Rin targets developers who want component-based UI without framework overhead.
 
 ---
 
@@ -26,7 +26,7 @@ Modern UI frameworks often introduce:
 - large dependency graphs
 - indirection between state and DOM
 
-RinJS instead provides:
+Rin instead provides:
 
 - direct DOM rendering
 - explicit execution model
@@ -62,9 +62,9 @@ No classes. No decorators. No lifecycle APIs.
 
 ## Transparent Virtual DOM
 
-RinJS builds minimal Virtual DOM templates strictly to power local, fast DOM patching.
+Rin builds minimal Virtual DOM templates strictly to power local, fast DOM patching.
 
-> **Note:** RinJS may migrate entirely to an Ahead-Of-Time (AOT) compiler architecture in the future. This would completely eliminate the Virtual DOM and DOM-patching engines, allowing for true direct-to-DOM updates like Svelte or SolidJS, while preserving our explicit component execution model.
+> **Note:** Rin may migrate entirely to an Ahead-Of-Time (AOT) compiler architecture in the future. This would completely eliminate the Virtual DOM and DOM-patching engines, allowing for true direct-to-DOM updates like Svelte or SolidJS, while preserving our explicit component execution model.
 
 Rendering pipeline:
 
@@ -88,7 +88,7 @@ No implicit batching.
 
 ## TypeScript First
 
-RinJS is designed around strict typing:
+Rin is designed around strict typing:
 
 - JSX typing
 - children typing
@@ -171,7 +171,7 @@ mount(<App />, document.body);
 
 # Comparison With React
 
-| Feature           | RinJS      | React      |
+| Feature           | Rin      | React      |
 | ----------------- | ---------- | ---------- |
 | Virtual DOM       | Minimal    | Yes        |
 | Scheduler         | No         | Yes        |
@@ -182,7 +182,7 @@ mount(<App />, document.body);
 | Abstraction Level | Low        | Medium     |
 | Control           | High       | Medium     |
 
-RinJS prioritizes control over automation.
+Rin prioritizes control over automation.
 
 ---
 
@@ -254,7 +254,7 @@ Usage:
 
 To directly access a physical HTML Node (e.g. for interacting with a `<canvas>` element or a localized third-party charting library), you can securely bind a **function closure** directly to the `ref` prop. 
 
-RinJS executes the function right after the component paints that node cleanly to the DOM:
+Rin executes the function right after the component paints that node cleanly to the DOM:
 
 ```tsx
 function CanvasComponent(props, ctx) {
@@ -274,26 +274,26 @@ function CanvasComponent(props, ctx) {
 
 # Rendering & Reactivity
 
-RinJS provides three primary APIs for rendering and updating the DOM explicitly.
+Rin provides three primary APIs for rendering and updating the DOM explicitly.
 
 ### Initial Mounting
 
 Mount your root application to the DOM:
 
 ```ts
-import { mount } from "rinjs";
+import { mount } from "rin-lib";
 
 mount(<App />, document.getElementById("app"));
 ```
 
 ### Targeted Rerendering
 
-RinJS does not use an automated Virtual DOM scheduler. Instead, reactivity is explicit and localized. You precisely dictate when updates generate patching routines by using `rerender`:
+Rin does not use an automated Virtual DOM scheduler. Instead, reactivity is explicit and localized. You precisely dictate when updates generate patching routines by using `rerender`:
 
 1. **Rerender by Component Reference**: Globally updates all active instances of a specific component function on the page.
 
 ```ts
-import { rerender } from "rinjs";
+import { rerender } from "rin-lib";
 
 function Header() {
   return <header>Local Time: {new Date().toLocaleTimeString()}</header>;
@@ -306,13 +306,13 @@ rerender(Header);
 2. **Rerender by Group string**: Updates specific elements or components tagged with an explicit `group` property. Useful for highly specific or targeted updates.
 
 ```ts
-import { rerender } from "rinjs";
+import { rerender } from "rin-lib";
 
 // Component or element rendered with <section group="user-stats" />
 rerender("user-stats");
 ```
 
-3. **Rerender by Component Context**: Renders solely the specific component instance issuing the call. To ensure zero-magic predictability, RinJS passes a reliable execution context as the second argument to any component.
+3. **Rerender by Component Context**: Renders solely the specific component instance issuing the call. To ensure zero-magic predictability, Rin passes a reliable execution context as the second argument to any component.
 
 ```tsx
 function Dropdown(props, ctx) {
@@ -335,10 +335,10 @@ function Dropdown(props, ctx) {
 
 ### Demounting & Cleanup
 
-To prevent memory leaks when components are removed dynamically, RinJS provides an explicit `unmount` API to clean up active trees and unbind listeners.
+To prevent memory leaks when components are removed dynamically, Rin provides an explicit `unmount` API to clean up active trees and unbind listeners.
 
 ```ts
-import { unmount } from "rinjs";
+import { unmount } from "rin-lib";
 
 // Tear down a whole container explicitly (e.g. when unmounting the whole application)
 unmount(document.getElementById("app") as HTMLElement);
@@ -348,9 +348,9 @@ unmount(document.getElementById("app") as HTMLElement);
 
 # Lifecycles
 
-While RinJS eliminates complex implicit lifecycle scheduling, you will still need to perform side-effects predictably (like data fetching or WebGL rendering) when working with direct DOM mutations.
+While Rin eliminates complex implicit lifecycle scheduling, you will still need to perform side-effects predictably (like data fetching or WebGL rendering) when working with direct DOM mutations.
 
-Because component functions are executed only once to initialize state, your `ctx.onMount` logic is inherently immune to infinite-loop fetch bugs. RinJS saves and executes the inner closure returned by your component on every `ctx.rerender`:
+Because component functions are executed only once to initialize state, your `ctx.onMount` logic is inherently immune to infinite-loop fetch bugs. Rin saves and executes the inner closure returned by your component on every `ctx.rerender`:
 
 ```tsx
 function APIDataLoader(props, ctx) {
@@ -408,7 +408,7 @@ Example `tsconfig.json`:
 {
   "compilerOptions": {
     "jsx": "react-jsx",
-    "jsxImportSource": "rinjs"
+    "jsxImportSource": "rin-lib"
   }
 }
 ```
@@ -418,7 +418,7 @@ Example `tsconfig.json`:
 # Example Project Structure
 
 ```
-rinjs/
+rin-lib/
  ├── jsx-runtime.ts
  ├── types.ts
  ├── mount.ts
@@ -427,7 +427,7 @@ rinjs/
 
 ---
 
-# When To Use RinJS
+# When To Use Rin
 
 Recommended for:
 
@@ -447,7 +447,7 @@ Not ideal for:
 
 # Design Philosophy
 
-RinJS prioritizes:
+Rin prioritizes:
 
 ```
 clarity > abstraction
