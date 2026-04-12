@@ -1,21 +1,57 @@
 ---
-import "../styles/global.css";
-import Header from '../components/Header';
+import Layout from "../layouts/Layout.astro";
 ---
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<title>Rin Documentation</title>
-	</head>
-	<body class="bg-gray-50 min-h-screen">
-		<Header title="Rin Framework" client:load />
-		<main class="p-8 max-w-4xl mx-auto">
-			<h2 class="text-2xl font-semibold text-gray-800">Welcome to the future of minimalist web dev.</h2>
-			<p class="mt-4 text-gray-600">
-				Rin is a hyper-minimalist JSX framework designed for speed and simplicity. 
-				This hello world page verifies our Astro, Tailwind v4, and Pagefind setup!
-			</p>
-		</main>
-	</body>
-</html>
+<Layout title="Rin | The Hyper-minimalist JSX Framework">
+  <div class="flex flex-col items-center justify-center text-center mt-16 md:mt-32">
+    <div class="inline-flex items-center rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1 text-sm font-medium text-zinc-800 mb-8 cursor-default">
+      <span class="flex h-2 w-2 rounded-full bg-black mr-2"></span>
+      Rin v0.2.0 is now available
+    </div>
+    
+    <h1 class="text-4xl md:text-7xl font-extrabold tracking-tight text-black max-w-4xl">
+      Build web apps with <br class="hidden md:block" /> uncompromised speed.
+    </h1>
+    
+    <p class="mt-6 max-w-2xl text-lg text-zinc-600">
+      Rin is a hyper-minimalist JSX framework that strictly strips away the Virtual DOM. 
+      Write perfectly ordinary reactive components that compile into blisteringly fast native HTML strings and vanilla DOM patches.
+    </p>
+    
+    <div class="mt-10 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+      <a href="/guide" class="inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-black hover:bg-zinc-800 transition-colors cursor-pointer">
+        Get Started
+      </a>
+      <a href="https://github.com/hulahulaxl/rin" target="_blank" rel="noreferrer" class="inline-flex justify-center items-center px-6 py-3 border border-zinc-200 text-base font-medium rounded-lg text-black bg-white hover:bg-zinc-50 transition-colors cursor-pointer">
+        View on GitHub
+      </a>
+    </div>
+  </div>
+
+  <div class="mt-24 md:mt-32 border-t border-zinc-100 pt-16">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="flex flex-col">
+        <div class="h-10 w-10 rounded-lg border border-zinc-200 flex items-center justify-center mb-4 text-black">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        </div>
+        <h3 class="text-lg font-bold text-black">Zero Virtual DOM</h3>
+        <p class="mt-2 text-zinc-600 leading-relaxed">By avoiding VDOM diffing entirely, Rin patches exactly what needs to be changed natively on the physical DOM. Pure performance.</p>
+      </div>
+      
+      <div class="flex flex-col">
+        <div class="h-10 w-10 rounded-lg border border-zinc-200 flex items-center justify-center mb-4 text-black">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </div>
+        <h3 class="text-lg font-bold text-black">Vanilla JS Aligned</h3>
+        <p class="mt-2 text-zinc-600 leading-relaxed">If it works in native HTML, it works in Rin. Native attributes like <code class="bg-zinc-100 px-1 py-0.5 rounded text-sm text-black">class</code> behave exactly as web standards intend.</p>
+      </div>
+
+      <div class="flex flex-col">
+        <div class="h-10 w-10 rounded-lg border border-zinc-200 flex items-center justify-center mb-4 text-black">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+        </div>
+        <h3 class="text-lg font-bold text-black">Astro Integrated</h3>
+        <p class="mt-2 text-zinc-600 leading-relaxed">Seamless first-party Astro support for pushing out robust documentation, landing pages, and interactive UI islands effortlessly.</p>
+      </div>
+    </div>
+  </div>
+</Layout>

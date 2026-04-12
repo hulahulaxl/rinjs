@@ -94,7 +94,20 @@ export namespace JSX {
     children: (VNode | string)[];
   }
 
+  export type RelaxedSVGProps<K extends keyof SVGElementTagNameMap> = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [P in keyof SVGElementTagNameMap[K]]?: any; // Native keys with relaxed types for intellisense
+  } & {
+    class?: string;
+    style?: string | Partial<CSSStyleDeclaration>;
+    children?: JSX.Child | JSX.Child[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any; 
+  };
+
   export type IntrinsicElements = {
     [K in keyof HTMLElementTagNameMap]: Props<K>;
+  } & {
+    [K in keyof SVGElementTagNameMap]: RelaxedSVGProps<K>;
   };
 }
