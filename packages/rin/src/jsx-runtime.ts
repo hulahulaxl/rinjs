@@ -57,11 +57,39 @@ type DOMProps<K extends ElementType> = Omit<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ref?: (el: any) => void;
   key?: string | number;
+
+  [key: `aria-${string}`]: unknown;
+  [key: `data-${string}`]: unknown;
 };
 
-type Props<K extends ElementType> = DOMProps<K> & {
-  children?: JSX.Child | JSX.Child[];
-};
+interface AriaAttributes {
+  "aria-hidden"?: boolean | "true" | "false";
+  "aria-label"?: string;
+  "aria-labelledby"?: string;
+  "aria-describedby"?: string;
+  "aria-expanded"?: boolean | "true" | "false";
+  "aria-checked"?: boolean | "mixed" | "true" | "false";
+  "aria-current"?:
+    | boolean
+    | "page"
+    | "step"
+    | "location"
+    | "date"
+    | "time"
+    | "true"
+    | "false";
+  "aria-disabled"?: boolean | "true" | "false";
+  "aria-controls"?: string;
+  "aria-live"?: "off" | "assertive" | "polite";
+  "aria-modal"?: boolean | "true" | "false";
+  "aria-selected"?: boolean | "true" | "false";
+  "aria-invalid"?: boolean | "grammar" | "spelling" | "true" | "false";
+}
+
+type Props<K extends ElementType> = DOMProps<K> &
+  AriaAttributes & {
+    children?: JSX.Child | JSX.Child[];
+  };
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace JSX {
@@ -101,9 +129,19 @@ export namespace JSX {
     class?: string;
     style?: string | Partial<CSSStyleDeclaration>;
     children?: JSX.Child | JSX.Child[];
+
+    // Common SVG dashed attributes missing from native DOM interfaces
+    "fill-rule"?: "nonzero" | "evenodd" | "inherit";
+    "clip-rule"?: "nonzero" | "evenodd" | "inherit";
+    "stroke-width"?: number | string;
+    "stroke-linecap"?: "butt" | "round" | "square" | "inherit";
+    "stroke-linejoin"?: "miter" | "round" | "bevel" | "inherit";
+    "stroke-dasharray"?: string | number;
+    "stroke-dashoffset"?: string | number;
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    [key: string]: any; 
-  };
+    [key: string]: any;
+  } & AriaAttributes;
 
   export type IntrinsicElements = {
     [K in keyof HTMLElementTagNameMap]: Props<K>;
