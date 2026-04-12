@@ -6,6 +6,8 @@
     "outDir": "dist",
     "skipLibCheck": true,
     "baseUrl": ".",
+    "ignoreDeprecations": "6.0", // baseUrl is deprecated since 5.0, error since 6.0
+
     "paths": {
       "rin-lib": ["packages/rin/src"]
     },
