@@ -11,7 +11,7 @@ export function eventProxy(this: Element, e: Event) {
   }
 }
 
-export function renderNode(vnode: VNode | string): Node {
+export function renderNode(vnode: VNode | string, isSvg = false): Node {
   if (typeof vnode === "string") return document.createTextNode(vnode);
 
   if (typeof vnode.type === "function") {
@@ -59,7 +59,7 @@ export function renderNode(vnode: VNode | string): Node {
     const deregister = register(vnode.type as Function, vnode.props.group as string | undefined, ctx.rerender);
     unmountCallbacks.push(deregister);
 
-    currentNode = renderNode(initialVNode);
+    currentNode = renderNode(initialVNode, isSvg);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (currentNode as any)._vnode = initialVNode;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -77,7 +77,10 @@ export function renderNode(vnode: VNode | string): Node {
     return currentNode;
   }
 
-  const el = document.createElement(vnode.type);
+  const isNodeSvg = isSvg || vnode.type === "svg";
+  const el = isNodeSvg
+    ? document.createElementNS("http://www.w3.org/2000/svg", vnode.type as string)
+    : document.createElement(vnode.type as string);
 
   for (const key in vnode.props) {
     const value = vnode.props[key];
@@ -126,7 +129,7 @@ export function renderNode(vnode: VNode | string): Node {
   }
 
   vnode.children.forEach(child => {
-    el.appendChild(renderNode(child));
+    el.appendChild(renderNode(child, isNodeSvg));
   });
 
   return el;

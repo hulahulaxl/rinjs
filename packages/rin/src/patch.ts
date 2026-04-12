@@ -80,10 +80,13 @@ function updateProps(
 export function patchDOM(
   domNode: Node,
   oldVNode: VNode,
-  newVNode: VNode
+  newVNode: VNode,
+  isSvg = false
 ): Node {
+  const isNodeSvg = isSvg || (domNode instanceof Element && domNode.namespaceURI === "http://www.w3.org/2000/svg");
+
   if (oldVNode.type !== newVNode.type) {
-    const newNode = renderNode(newVNode);
+    const newNode = renderNode(newVNode, isNodeSvg);
     if (domNode.parentNode) {
       executeUnmount(domNode);
       domNode.parentNode.replaceChild(newNode, domNode);
@@ -116,7 +119,7 @@ export function patchDOM(
       }
     }
 
-    const newNode = renderNode(newVNode);
+    const newNode = renderNode(newVNode, isNodeSvg);
     if (domNode.parentNode) {
       executeUnmount(domNode);
       domNode.parentNode.replaceChild(newNode, domNode);
@@ -193,7 +196,7 @@ export function patchDOM(
     let finalNode: Node;
 
     if (!matchedNode || !matchedOldVNode) {
-      finalNode = renderNode(newChild);
+      finalNode = renderNode(newChild, isNodeSvg);
     } else {
       if (typeof matchedOldVNode === "string" || typeof newChild === "string") {
         if (typeof matchedOldVNode === "string" && typeof newChild === "string") {
@@ -206,14 +209,15 @@ export function patchDOM(
           }
           finalNode = matchedNode;
         } else {
-          finalNode = renderNode(newChild);
+          finalNode = renderNode(newChild, isNodeSvg);
           executeUnmount(matchedNode);
         }
       } else {
         finalNode = patchDOM(
           matchedNode,
           matchedOldVNode as VNode,
-          newChild as VNode
+          newChild as VNode,
+          isNodeSvg
         );
       }
     }
