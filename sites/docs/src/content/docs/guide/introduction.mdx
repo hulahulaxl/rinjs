@@ -1,0 +1,27 @@
+---
+title: Introduction
+description: Welcome to Rin, the hyper-minimalist JSX framework.
+order: 1
+---
+
+# Introduction
+
+Rin is a hyper-minimalist JSX framework designed for developers who value performance, simplicity, and standard web technologies.
+
+## Why Rin?
+
+In a world of increasingly complex web frameworks, Rin takes a step back. It removes the Virtual DOM entirely, opting for a direct-to-DOM approach that is both faster and easier to reason about.
+
+```tsx
+function Hello({ name }) {
+  return () => <h1>Hello, {name}!</h1>;
+}
+```
+
+### Key Features
+
+- **Zero Virtual DOM**: Updates are patched directly to the native DOM.
+- **Vanilla JS Aligned**: No magic mapping of attributes. Use `class` instead of `className`.
+- **Astro Ready**: Built to work seamlessly as an Astro integration for highly performant documentation and landing pages.
+
+Next, let's look at [Getting Started](/guide/getting-started).

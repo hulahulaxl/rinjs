@@ -1,0 +1,54 @@
+---
+title: Getting Started
+description: Learn how to set up your first Rin project.
+order: 2
+---
+
+# Getting Started
+
+Setting up a Rin project is straightforward, especially if you are already using Astro.
+
+## Installation
+
+You can add the Rin integration to your Astro project using `npx`:
+
+```bash
+npx astro add astro-rin
+```
+
+Alternatively, you can install the packages manually:
+
+```bash
+pnpm add rin-lib astro-rin
+```
+
+## Creating your first component
+
+Create a file named `MyComponent.tsx` in your `src/components` directory:
+
+```tsx
+import type { ComponentContext } from "rin-lib";
+
+export default function MyComponent({ name }, ctx: ComponentContext) {
+  return () => (
+    <div class="hello-container">
+      <h1>Hello, {name}!</h1>
+      <p>This is rendered with Rin.</p>
+    </div>
+  );
+}
+```
+
+## Using the component in Astro
+
+Now you can use this component in any Astro page:
+
+```astro
+---
+import MyComponent from "../components/MyComponent";
+---
+
+<MyComponent client:load name="World" />
+```
+
+Stay minimalist!

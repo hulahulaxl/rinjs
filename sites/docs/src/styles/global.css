@@ -1,1 +1,47 @@
 @import "tailwindcss";
+
+/* @import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+@theme {
+  --font-sans: "Lexend", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+:root {
+  font-family: var(--font-sans);
+} */
+
+/* Minimalist Documentation Typography */
+article h1 {
+  @apply text-4xl font-extrabold text-black mb-8;
+}
+article h2 {
+  @apply text-2xl font-bold text-black mt-12 mb-4 border-b border-zinc-100 pb-2;
+}
+article h3 {
+  @apply text-xl font-bold text-black mt-8 mb-3;
+}
+article p {
+  @apply text-zinc-600 leading-relaxed mb-6;
+}
+article ul {
+  @apply list-disc list-outside ml-6 mb-6 text-zinc-600 space-y-2;
+}
+article ol {
+  @apply list-decimal list-outside ml-6 mb-6 text-zinc-600 space-y-2;
+}
+article code:not(pre code) {
+  @apply bg-zinc-100 text-black px-1.5 py-0.5 rounded text-sm font-mono;
+}
+article pre {
+  @apply bg-zinc-50 border border-zinc-200 rounded-xl p-6 mb-8 overflow-x-auto;
+}
+article pre code {
+  @apply text-sm font-mono leading-relaxed;
+}
+article a {
+  @apply text-black underline underline-offset-4 decoration-zinc-300 hover:decoration-black transition-colors;
+}
+article blockquote {
+  @apply border-l-4 border-zinc-200 pl-6 italic text-zinc-500 my-8;
+}

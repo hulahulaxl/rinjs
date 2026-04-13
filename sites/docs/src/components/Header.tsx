@@ -1,13 +1,27 @@
 import type { ComponentContext } from "rin-lib";
 
+interface HeaderProps {
+  onMenuToggle?: () => void;
+}
+
 export default function Header(
-  _props: Record<string, unknown>,
+  props: HeaderProps,
   _ctx: ComponentContext
 ) {
   return () => (
     <header class="sticky top-0 z-50 w-full border-b border-zinc-200 bg-white/80 backdrop-blur-md">
       <div class="mx-auto max-w-5xl px-6 lg:px-8 h-16 flex items-center justify-between">
-        <div class="flex items-center gap-8">
+        <div class="flex items-center gap-4 md:gap-8">
+          <button 
+            type="button" 
+            class="lg:hidden p-2 -ml-2 text-zinc-500 hover:text-black transition-colors"
+            onclick={props.onMenuToggle}
+          >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+          
           <a
             href="/"
             class="text-xl font-bold tracking-tight text-zinc-900 group flex items-center gap-2"
@@ -63,7 +77,7 @@ export default function Header(
               <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
             </svg>
             <span class="font-medium">Search...</span>
-            <kbd class="ml-4 font-sans text-xs tracking-widest text-zinc-400">
+            <kbd class="ml-4 font-mono text-xs tracking-widest text-zinc-400">
               ⌘K
             </kbd>
           </button>

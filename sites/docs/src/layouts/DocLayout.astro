@@ -1,0 +1,24 @@
+---
+import Layout from "./Layout.astro";
+import DocsWrapper from "../components/DocsWrapper";
+import { GUDIE_NAV, API_NAV } from "../config/navigation";
+
+interface Props {
+  title: string;
+  section: "guide" | "api";
+}
+
+const { title, section } = Astro.props;
+const nav = section === "guide" ? GUDIE_NAV : API_NAV;
+const currentPath = Astro.url.pathname;
+---
+
+<Layout title={`${title} | Rin Documentation`}>
+  <DocsWrapper client:load nav={nav} currentPath={currentPath}>
+    <article class="max-w-none">
+      <slot />
+    </article>
+  </DocsWrapper>
+</Layout>
+
+
