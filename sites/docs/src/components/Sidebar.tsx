@@ -4,52 +4,97 @@ import { type NavSection } from "../config/navigation";
 interface SidebarProps {
   nav: NavSection[];
   currentPath: string;
-  isOpen?: boolean;
-  onClose?: () => void;
 }
 
-export default function Sidebar(props: SidebarProps, _ctx: ComponentContext) {
+export default function Sidebar(props: SidebarProps, ctx: ComponentContext) {
+  let isOpen = false;
+
+  ctx.onMount(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<boolean>).detail;
+      isOpen = typeof detail === "boolean" ? detail : !isOpen;
+      ctx.rerender();
+    };
+    window.addEventListener("toggle-sidebar", handler);
+    ctx.onUnmount(() => window.removeEventListener("toggle-sidebar", handler));
+  });
+
+  const close = () => {
+    isOpen = false;
+    ctx.rerender();
+  };
+
   return () => (
     <>
-      {/* Mobile Backdrop */}
-      {props.isOpen && (
-        <div 
-          class="fixed inset-0 z-40 bg-white/60 backdrop-blur-sm lg:hidden transition-opacity"
-          onclick={props.onClose}
-        />
-      )}
+      {/* Backdrop */}
+      <div
+        class={`fixed inset-0 z-40 bg-black/20 backdrop-blur-sm lg:hidden transition-opacity duration-200 ${
+          isOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
+        onclick={close}
+      />
 
-      {/* Sidebar Content */}
-      <aside 
+      {/* Sidebar Panel */}
+      <aside
         class={`
-          fixed inset-y-0 left-0 z-50 w-full max-w-[280px] bg-white border-r border-zinc-100 px-6 py-10 overflow-y-auto transform transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 lg:z-0 lg:w-64 lg:px-0 lg:py-0 lg:bg-transparent lg:border-none
-          ${props.isOpen ? "translate-x-0" : "-translate-x-full"}
+          fixed top-0 left-0 z-50 h-screen w-60 bg-white border-r border-zinc-100 flex flex-col overflow-hidden
+          transition-transform duration-250 ease-in-out
+          lg:static lg:h-[calc(100vh-3.5rem)] lg:sticky lg:top-14 lg:translate-x-0 lg:shrink-0
+          ${isOpen ? "translate-x-0 shadow-xl" : "-translate-x-full"}
         `}
       >
-        <nav class="space-y-8">
-          {props.nav.map((section) => (
-            <div class="space-y-3">
-              <h4 class="text-xs font-bold uppercase tracking-widest text-zinc-900 border-l-2 border-black pl-3">
+        {/* Mobile header */}
+        <div class="flex items-center justify-between px-5 h-14 border-b border-zinc-100 lg:hidden">
+          <span class="text-sm font-semibold text-zinc-900">Menu</span>
+          <button
+            type="button"
+            onclick={close}
+            class="p-1.5 rounded-md text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-colors"
+            aria-label="Close menu"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+
+        {/* Navigation */}
+        <nav class="flex-1 overflow-y-auto px-3 py-6 space-y-6">
+          {props.nav.map(section => (
+            <div>
+              <p class="px-2 mb-1.5 text-[10px] font-semibold uppercase tracking-widest text-zinc-400">
                 {section.title}
-              </h4>
-              <ul class="space-y-1">
-                {section.items.map((item) => (
-                  <li>
-                    <a
-                      href={item.href}
-                      class={`
-                        block text-sm py-2 px-3 rounded-md transition-all
-                        ${
-                          props.currentPath === item.href
-                            ? "bg-zinc-100 text-black font-bold border-l-2 border-black -ml-[2px]"
-                            : "text-zinc-500 hover:text-black hover:bg-zinc-50"
-                        }
-                      `}
-                    >
-                      {item.title}
-                    </a>
-                  </li>
-                ))}
+              </p>
+              <ul class="space-y-0.5">
+                {section.items.map(item => {
+                  const isActive = props.currentPath === item.href;
+                  return (
+                    <li>
+                      <a
+                        href={item.href}
+                        class={`flex items-center px-2 py-1.5 rounded-md text-sm transition-colors ${
+                          isActive
+                            ? "bg-zinc-100 text-zinc-900 font-medium"
+                            : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-50"
+                        }`}
+                      >
+                        {item.title}
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}

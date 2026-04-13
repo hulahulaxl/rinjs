@@ -1,33 +1,46 @@
 import type { ComponentContext } from "rin-lib";
 
-interface HeaderProps {
-  onMenuToggle?: () => void;
-}
-
 export default function Header(
-  props: HeaderProps,
+  _props: Record<string, unknown>,
   _ctx: ComponentContext
 ) {
+  const openSidebar = () => {
+    console.log("dsfsdf");
+    window.dispatchEvent(new CustomEvent("toggle-sidebar", { detail: true }));
+  };
+
   return () => (
-    <header class="sticky top-0 z-50 w-full border-b border-zinc-200 bg-white/80 backdrop-blur-md">
-      <div class="mx-auto max-w-5xl px-6 lg:px-8 h-16 flex items-center justify-between">
-        <div class="flex items-center gap-4 md:gap-8">
-          <button 
-            type="button" 
-            class="lg:hidden p-2 -ml-2 text-zinc-500 hover:text-black transition-colors"
-            onclick={props.onMenuToggle}
-          >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-          
-          <a
-            href="/"
-            class="text-xl font-bold tracking-tight text-zinc-900 group flex items-center gap-2"
+    <header class="sticky top-0 z-50 w-full h-14 border-b border-zinc-200 bg-white/90 backdrop-blur-sm flex items-center">
+      <div class="w-full max-w-screen-xl mx-auto px-6 flex items-center justify-between gap-6">
+        {/* Left: Hamburger + Logo + Nav */}
+        <div class="flex items-center gap-6">
+          <button
+            type="button"
+            onclick={openSidebar}
+            class="lg:hidden -ml-1 p-1.5 rounded-md text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 transition-colors"
+            aria-label="Open menu"
           >
             <svg
-              class="h-6 w-6 group-hover:rotate-12 transition-transform"
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              stroke-width="1.75"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+          </button>
+
+          <a
+            href="/"
+            class="flex items-center gap-2 text-zinc-900 font-semibold text-sm tracking-tight"
+          >
+            <svg
+              class="h-5 w-5"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -37,60 +50,67 @@ export default function Header(
             >
               <polygon points="12 2 2 22 22 22" />
             </svg>
-            rin
+            <span>rin</span>
           </a>
 
-          <nav class="hidden md:flex gap-6 items-center">
+          <nav class="hidden md:flex items-center gap-1">
             <a
               href="/"
-              class="text-sm font-medium text-zinc-600 hover:text-black transition-colors"
+              class="px-3 py-1.5 text-sm text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded-md transition-colors"
             >
               Home
             </a>
             <a
               href="/guide"
-              class="text-sm font-medium text-zinc-600 hover:text-black transition-colors"
+              class="px-3 py-1.5 text-sm text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded-md transition-colors"
             >
               Guide
             </a>
             <a
               href="/api"
-              class="text-sm font-medium text-zinc-600 hover:text-black transition-colors"
+              class="px-3 py-1.5 text-sm text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded-md transition-colors"
             >
-              API Reference
+              API
             </a>
           </nav>
         </div>
 
-        <div class="flex items-center gap-4">
+        {/* Right: Search + Divider + GitHub */}
+        <div class="flex items-center gap-3">
           <button
             type="button"
-            class="hidden lg:flex items-center gap-2 px-3 py-1.5 text-sm text-zinc-500 bg-zinc-100 hover:bg-zinc-200/80 rounded-md transition-colors border border-zinc-200/50 outline-none cursor-pointer"
+            class="hidden sm:flex items-center gap-2 h-8 pl-3 pr-2 rounded-md border border-zinc-200 bg-zinc-50 text-zinc-400 hover:border-zinc-300 hover:bg-white transition-colors"
           >
             <svg
-              class="w-4 h-4"
+              class="w-3.5 h-3.5 shrink-0"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
               stroke-width="2"
             >
-              <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
             </svg>
-            <span class="font-medium">Search...</span>
-            <kbd class="ml-4 font-mono text-xs tracking-widest text-zinc-400">
+            <span class="text-xs text-zinc-400">Search</span>
+            <kbd class="ml-2 font-mono text-[10px] text-zinc-300 border border-zinc-200 rounded px-1 py-0.5">
               ⌘K
             </kbd>
           </button>
+
+          <div class="w-px h-4 bg-zinc-200" />
 
           <a
             href="https://github.com/hulahulaxl/rin"
             target="_blank"
             rel="noreferrer"
-            class="text-zinc-500 hover:text-black transition-colors"
+            class="p-1.5 rounded-md text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 transition-colors"
+            aria-label="GitHub"
           >
-            <span class="sr-only">GitHub</span>
             <svg
-              class="h-5 w-5"
+              class="h-4 w-4"
               fill="currentColor"
               viewBox="0 0 24 24"
               aria-hidden="true"
