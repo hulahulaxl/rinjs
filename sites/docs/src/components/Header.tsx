@@ -5,7 +5,6 @@ export default function Header(
   _ctx: ComponentContext
 ) {
   const openSidebar = () => {
-    console.log("dsfsdf");
     window.dispatchEvent(new CustomEvent("toggle-sidebar", { detail: true }));
   };
 
