@@ -7,7 +7,8 @@ const docsCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string().optional(),
-    order: z.number().optional()
+    category: z.string(),
+    order: z.number().default(99)
   })
 });
 

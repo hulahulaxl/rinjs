@@ -8,7 +8,11 @@
     "description": {
       "type": "string"
     },
+    "category": {
+      "type": "string"
+    },
     "order": {
+      "default": 99,
       "type": "number"
     },
     "$schema": {
@@ -16,6 +20,7 @@
     }
   },
   "required": [
-    "title"
+    "title",
+    "category"
   ]
 }

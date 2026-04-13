@@ -8,7 +8,7 @@ export async function getStaticPaths() {
     return id.startsWith('api/');
   });
   return apiEntries.map((entry: CollectionEntry<'docs'>) => ({
-    params: { slug: entry.id.replace('api/', '') }, props: { entry },
+    params: { slug: entry.id.replace('api/', '').replace(/\.(md|mdx)$/, '') }, props: { entry },
   }));
 }
 

@@ -1,24 +1,54 @@
 ---
-import Layout from "./Layout.astro";
+import "../styles/global.css";
+import { getCollection, type CollectionEntry } from "astro:content";
 import DocsWrapper from "../components/DocsWrapper";
-import { GUDIE_NAV, API_NAV } from "../config/navigation";
+import type { NavSection } from "../config/navigation";
 
 interface Props {
   title: string;
   section: "guide" | "api";
+  currentEntryId?: string;
 }
 
 const { title, section } = Astro.props;
-const nav = section === "guide" ? GUDIE_NAV : API_NAV;
 const currentPath = Astro.url.pathname;
+
+// Fetch all docs entries for this section and build sidebar nav from metadata
+const allEntries = await getCollection("docs", ({ id }: CollectionEntry<"docs">) =>
+  id.startsWith(`${section}/`)
+);
+
+// Sort by order field
+allEntries.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+
+// Build sections by grouping on the `category` frontmatter field
+const sectionMap = new Map<string, { title: string; href: string; order: number }[]>();
+for (const entry of allEntries) {
+  const cat = entry.data.category;
+  const slug = entry.id.replace(`${section}/`, "").replace(/\.(md|mdx)$/, "");
+  if (!sectionMap.has(cat)) sectionMap.set(cat, []);
+  sectionMap.get(cat)!.push({ title: entry.data.title, href: `/${section}/${slug}`, order: entry.data.order ?? 99 });
+}
+
+const nav: NavSection[] = Array.from(sectionMap.entries()).map(([catTitle, items]) => ({
+  title: catTitle,
+  items,
+}));
 ---
 
-<Layout title={`${title} | Rin Documentation`}>
-  <DocsWrapper client:load nav={nav} currentPath={currentPath}>
-    <article class="max-w-none">
-      <slot />
-    </article>
-  </DocsWrapper>
-</Layout>
-
-
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={title} />
+    <title>{title} | Rin Documentation</title>
+  </head>
+  <body class="bg-white text-zinc-900 antialiased min-h-screen flex flex-col selection:bg-black selection:text-white">
+    <DocsWrapper client:load nav={nav} currentPath={currentPath}>
+      <article class="max-w-none">
+        <slot />
+      </article>
+    </DocsWrapper>
+  </body>
+</html>
