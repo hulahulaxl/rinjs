@@ -54,8 +54,39 @@ export default function Header(props: HeaderProps, _ctx: ComponentContext) {
             </svg>
             <span>Rin</span>
           </a>
+        </div>
 
-          <nav class="hidden md:flex items-center gap-1">
+        {/* Center: Massive Search Bar */}
+        <div class="flex-1 hidden sm:flex justify-center px-6">
+          <button
+            type="button"
+            class="w-full max-w-md flex items-center justify-between px-4 py-2 rounded-full border border-zinc-200 bg-zinc-50/50 hover:bg-white text-zinc-500 hover:border-zinc-300 transition-all shadow-sm group"
+          >
+            <div class="flex items-center gap-3">
+              <svg
+                class="w-4 h-4 text-zinc-400 group-hover:text-zinc-600 transition-colors"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+              <span class="text-sm tracking-wide">Search documentation...</span>
+            </div>
+            <kbd class="font-mono text-xs text-zinc-400 border border-zinc-200 rounded-md px-1.5 py-0.5 bg-white shadow-sm">
+              ⌘K
+            </kbd>
+          </button>
+        </div>
+
+        {/* Right: Nav + Divider + GitHub */}
+        <div class="flex items-center gap-3 md:gap-5">
+          <nav class="hidden md:flex items-center gap-1.5">
             <a
               href="/"
               class="px-3 py-1.5 text-sm text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded-md transition-colors"
@@ -75,34 +106,8 @@ export default function Header(props: HeaderProps, _ctx: ComponentContext) {
               API
             </a>
           </nav>
-        </div>
 
-        {/* Right: Search + Divider + GitHub */}
-        <div class="flex items-center gap-3">
-          <button
-            type="button"
-            class="hidden sm:flex items-center gap-2 h-8 pl-3 pr-2 rounded-md border border-zinc-200 bg-zinc-50 text-zinc-400 hover:border-zinc-300 hover:bg-white transition-colors"
-          >
-            <svg
-              class="w-3.5 h-3.5 shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              stroke-width="2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-            <span class="text-xs text-zinc-400">Search</span>
-            <kbd class="ml-2 font-mono text-[10px] text-zinc-300 border border-zinc-200 rounded px-1 py-0.5">
-              ⌘K
-            </kbd>
-          </button>
-
-          <div class="w-px h-4 bg-zinc-200" />
+          <div class="hidden md:block w-px h-4 bg-zinc-200" />
 
           <a
             href="https://github.com/hulahulaxl/rin"
