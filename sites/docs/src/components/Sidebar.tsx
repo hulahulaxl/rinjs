@@ -25,7 +25,7 @@ export default function Sidebar(props: SidebarProps, ctx: ComponentContext) {
   };
 
   return () => (
-    <>
+    <div id="sidebar-container">
       {/* Backdrop */}
       <div
         class={`fixed inset-0 z-40 bg-black/20 backdrop-blur-sm lg:hidden transition-opacity duration-200 ${
@@ -100,6 +100,6 @@ export default function Sidebar(props: SidebarProps, ctx: ComponentContext) {
           ))}
         </nav>
       </aside>
-    </>
+    </div>
   );
 }

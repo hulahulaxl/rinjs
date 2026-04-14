@@ -20,12 +20,29 @@ function normalizeChildren(children: unknown[]): (VNode | string)[] {
   return result;
 }
 
+export const Fragment = Symbol("Fragment");
+
 export function jsx(
-  type: VNode["type"],
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  type: VNode["type"] | symbol | any,
   props: Record<string, unknown> | null,
   key?: string | number
-): VNode {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+): any {
   const { children, ...rest } = props ?? {};
+
+  const normalizedChildren = normalizeChildren(
+    children === undefined
+      ? []
+      : Array.isArray(children)
+        ? children
+        : [children]
+  );
+
+  if (type === Fragment) {
+    return normalizedChildren;
+  }
+
   if (key != null) {
     rest.key = key;
   }
@@ -33,13 +50,7 @@ export function jsx(
   return {
     type,
     props: rest,
-    children: normalizeChildren(
-      children === undefined
-        ? []
-        : Array.isArray(children)
-          ? children
-          : [children]
-    )
+    children: normalizedChildren
   };
 }
 
