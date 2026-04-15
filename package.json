@@ -18,6 +18,8 @@
     "build:global-example": "cd examples/global-state && pnpm build",
     "lint": "eslint",
     "format": "prettier --write .",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "update-all": "ncu -u"
   },
   "keywords": [],
@@ -29,11 +31,13 @@
     "eslint": "^10.1.0",
     "eslint-config-prettier": "^10.1.8",
     "globals": "^17.4.0",
+    "happy-dom": "^20.9.0",
     "npm-check-updates": "^19.6.6",
     "prettier": "^3.8.1",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.57.2",
-    "vite": "^8.0.3"
+    "vite": "^8.0.3",
+    "vitest": "^4.1.4"
   }
 }

@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import { renderToString } from "./renderToString";
 import { jsx } from "./jsx-runtime";
 import type { ComponentContext } from "./types";
@@ -26,18 +27,13 @@ function App() {
     });
 }
 
-const vnode = jsx(App, {});
-const html = renderToString(vnode);
+describe("renderToString (SSR)", () => {
+  it("renders virtual DOM nodes to HTML strings correctly", () => {
+    const vnode = jsx(App, {});
+    const html = renderToString(vnode);
 
-console.log("--- SSR Output ---");
-console.log(html);
+    const expected = `<main id="app"><div class="container" style="color:red;margin-top:10px"><h1>Hello Rin</h1><p>Count: 42</p><input type="text" disabled><button>Click me</button></div></main>`;
 
-const expected = `<main id="app"><div class="container" style="color:red;margin-top:10px"><h1>Hello Rin</h1><p>Count: 42</p><input type="text" disabled><button>Click me</button></div></main>`;
-
-if (html === expected) {
-  console.log("✅ SSR matches expected output");
-} else {
-  console.error("❌ SSR output mismatch");
-  console.log("Expected:", expected);
-  process.exit(1);
-}
+    expect(html).toBe(expected);
+  });
+});

@@ -242,23 +242,10 @@ export function patchDOM(
       }
     }
 
-    // Use the snapshot index so DOM shifts from earlier insertBefore calls
-    // don't move the reference node for this slot.
-    // Guard: if patchDOM replaced the node at slot i via replaceChild, the
-    // snapshot entry is now detached. In that case fall back to null (append).
-    const snapshotRef = domSnapshot[i] ?? null;
-    const referenceNode =
-      snapshotRef?.parentNode === el ? snapshotRef : null;
+    const referenceNode = el.childNodes[i] ?? null;
 
     if (referenceNode !== finalNode) {
-      // Only call insertBefore if:
-      //  a) finalNode is not yet in el (newly created) - always needs inserting, OR
-      //  b) we have a non-null reference node to order against
-      // Skip when referenceNode is null AND finalNode is already in el:
-      //   that means replaceChild already placed it at the correct slot.
-      if (finalNode.parentNode !== el || referenceNode !== null) {
-        el.insertBefore(finalNode, referenceNode);
-      }
+      el.insertBefore(finalNode, referenceNode);
     }
   }
 
