@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
-import { renderNode, mount } from "./mount";
-import { jsx } from "./jsx-runtime";
-import type { ComponentContext } from "./types";
+import { renderNode, mount } from "../mount";
+import { jsx } from "../jsx-runtime";
+import type { ComponentContext } from "../types";
 
 describe("mount.ts", () => {
   it("renders simple element with attributes", () => {
@@ -14,7 +14,11 @@ describe("mount.ts", () => {
   });
 
   it("handles boolean attributes", () => {
-    const vnode = jsx("input", { type: "checkbox", checked: true, disabled: false });
+    const vnode = jsx("input", {
+      type: "checkbox",
+      checked: true,
+      disabled: false
+    });
     const node = renderNode(vnode) as HTMLInputElement;
 
     expect(node.type).toBe("checkbox");
@@ -52,23 +56,23 @@ describe("mount.ts", () => {
 
     expect(node.tagName).toBe("SPAN");
     expect(node.textContent).toBe("Rin");
-    
+
     // Check that context is populated
     expect(internalCtx!).toBeDefined();
     expect(typeof internalCtx!.rerender).toBe("function");
     expect(typeof internalCtx!.onMount).toBe("function");
     expect(typeof internalCtx!.onUnmount).toBe("function");
   });
-  
+
   it("executes ref callbacks", async () => {
     const spy = vi.fn();
     const vnode = jsx("div", { ref: spy });
-    
+
     const node = renderNode(vnode) as HTMLElement;
-    
+
     // ref callbacks are run via setTimeout({}, 0) in mount.ts
-    await new Promise((resolve) => setTimeout(resolve, 10));
-    
+    await new Promise(resolve => setTimeout(resolve, 10));
+
     expect(spy).toHaveBeenCalledWith(node);
   });
 });

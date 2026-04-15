@@ -1,9 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { renderToString } from "./renderToString";
-import { jsx } from "./jsx-runtime";
-import type { ComponentContext } from "./types";
+import { renderToString } from "../renderToString";
+import { jsx } from "../jsx-runtime";
+import type { ComponentContext } from "../types";
 
-function MyComponent({ name, count }: { name: string; count: number }, ctx: ComponentContext) {
+function MyComponent(
+  { name, count }: { name: string; count: number },
+  ctx: ComponentContext
+) {
   return () =>
     jsx("div", {
       class: "container",
@@ -21,9 +24,7 @@ function App() {
   return () =>
     jsx("main", {
       id: "app",
-      children: [
-        jsx(MyComponent, { name: "Rin", count: 42 })
-      ]
+      children: [jsx(MyComponent, { name: "Rin", count: 42 })]
     });
 }
 

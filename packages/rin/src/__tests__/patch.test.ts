@@ -1,8 +1,8 @@
 import { describe, it, expect, vi } from "vitest";
-import { patchDOM } from "./patch";
-import { renderNode } from "./mount";
-import { jsx } from "./jsx-runtime";
-import type { VNode } from "./types";
+import { patchDOM } from "../patch";
+import { renderNode } from "../mount";
+import { jsx } from "../jsx-runtime";
+import type { VNode } from "../types";
 
 describe("patchDOM", () => {
   it("updates attributes properly", () => {
@@ -10,10 +10,10 @@ describe("patchDOM", () => {
     const newVNode = jsx("div", { id: "new", class: "added" }) as VNode;
 
     const node = renderNode(oldVNode) as HTMLElement;
-    
+
     // Perform patch
     patchDOM(node, oldVNode, newVNode);
-    
+
     expect(node.id).toBe("new");
     expect(node.className).toBe("added");
     expect(node.hasAttribute("data-val")).toBe(false);
@@ -21,19 +21,14 @@ describe("patchDOM", () => {
 
   it("adds and removes unkeyed children", () => {
     const oldVNode = jsx("ul", {
-      children: [
-        jsx("li", { children: "1" }),
-        jsx("li", { children: "2" }),
-      ]
+      children: [jsx("li", { children: "1" }), jsx("li", { children: "2" })]
     }) as VNode;
 
     const node = renderNode(oldVNode) as HTMLElement;
     expect(node.childNodes.length).toBe(2);
 
     const newVNode = jsx("ul", {
-      children: [
-        jsx("li", { children: "1" }),
-      ]
+      children: [jsx("li", { children: "1" })]
     }) as VNode;
 
     patchDOM(node, oldVNode, newVNode);
@@ -44,7 +39,7 @@ describe("patchDOM", () => {
       children: [
         jsx("li", { children: "1" }),
         jsx("li", { children: "2" }),
-        jsx("li", { children: "3" }),
+        jsx("li", { children: "3" })
       ]
     }) as VNode;
 
@@ -58,7 +53,7 @@ describe("patchDOM", () => {
       children: [
         jsx("li", { key: "a", children: "A" }),
         jsx("li", { key: "b", children: "B" }),
-        jsx("li", { key: "c", children: "C" }),
+        jsx("li", { key: "c", children: "C" })
       ]
     }) as VNode;
 
@@ -71,7 +66,7 @@ describe("patchDOM", () => {
       children: [
         jsx("li", { key: "c", children: "C" }),
         jsx("li", { key: "b", children: "B" }),
-        jsx("li", { key: "a", children: "A" }),
+        jsx("li", { key: "a", children: "A" })
       ]
     }) as VNode;
 

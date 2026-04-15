@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { jsx, Fragment } from "./jsx-runtime";
-import type { VNode } from "./types";
+import { jsx, Fragment } from "../jsx-runtime";
+import type { VNode } from "../types";
 
 describe("jsx-runtime", () => {
   it("creates a simple VNode", () => {
