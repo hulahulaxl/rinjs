@@ -4,7 +4,7 @@ export const homepageData = {
     description: "The minimalist, non-reactive view library.",
     primaryCta: {
       text: "Get started",
-      href: "/guide"
+      href: "/guide/introduction"
     },
     secondaryCta: {
       text: "View on GitHub",
