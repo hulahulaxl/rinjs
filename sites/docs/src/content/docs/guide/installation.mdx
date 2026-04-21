@@ -1,20 +1,20 @@
 ---
 title: Installation
-description: Learn how to set up your first Rin project.
+description: Learn how to set up your first Cuek project.
 category: Getting Started
 order: 2
 ---
 
 # Installation
 
-Installing Rin is simple.
+Installing Cuek is simple.
 
 ## Step 1: Install the library
 
 Throw this into your terminal.
 
 ```bash
-npm i rin-lib
+npm i cuek
 ```
 
 ## Step 2: Update your tsconfig
@@ -25,17 +25,17 @@ TypeScript needs to know you are not using React. You need to be explicit with y
 {
   "compilerOptions": {
     "jsx": "react-jsx",
-    "jsxImportSource": "rin-lib"
+    "jsxImportSource": "cuek"
   }
 }
 ```
 
 ## Step 3: Hello World
 
-Here is exactly how you get your first Rin component on the screen.
+Here is exactly how you get your first Cuek component on the screen.
 
 ```tsx
-import { mount } from "rin-lib";
+import { mount } from "cuek";
 
 function App() {
   return () => <h1>Hello World</h1>;
@@ -48,4 +48,4 @@ That is it. You are done. Go build something.
 
 ## Use a real bundler
 
-We recommend using **Vite** because it is fast and modern. However, Rin is designed to be bundler-agnostic. Whether you use Webpack, Rollup, or even build your own custom system from scratch, Rin will work exactly how you expect.
+We recommend using **Vite** because it is fast and modern. However, Cuek is designed to be bundler-agnostic. Whether you use Webpack, Rollup, or even build your own custom system from scratch, Cuek will work exactly how you expect.

@@ -1,20 +1,20 @@
 ---
 title: jsx / jsxs
-description: The core functions for creating Virtual Nodes in Rin.
+description: The core functions for creating Virtual Nodes in Cuek.
 category: Core API
 order: 1
 ---
 
 # jsx / jsxs
 
-The `jsx` and `jsxs` functions are the heart of Rin. They transform your JSX syntax into lightweight Virtual Node objects. Most of the time, you will never touch these directly because the compiler handles the dirty work for you.
+The `jsx` and `jsxs` functions are the heart of Cuek. They transform your JSX syntax into lightweight Virtual Node objects. Most of the time, you will never touch these directly because the compiler handles the dirty work for you.
 
 ## Usage
 
 You rarely call these functions manually. TypeScript generates these calls for you once you have configured your `tsconfig.json` correctly.
 
 ```tsx
-import { jsx } from "rin-lib";
+import { jsx } from "cuek";
 
 // What the compiler sees
 const node = jsx("div", {
@@ -25,14 +25,14 @@ const node = jsx("div", {
 
 ### Parameters
 
-- **type**: The element name (string) or a Rin Component (function).
+- **type**: The element name (string) or a Cuek Component (function).
 - **props**: An object containing attributes and the `children` array.
 - **key**: (Optional) A unique identifier used for efficient DOM patching when rendering lists.
 
 ## Differences from React
 
-Rin is not trying to be a 1:1 React clone. Our runtime is leaner:
+Cuek is not trying to be a 1:1 React clone. Our runtime is leaner:
 
 1.  **No global object**: There is no magic `React` global. Everything is imported.
-2.  **Native attributes**: Use `class` instead of `className`. It is a string in HTML, so it is a string in Rin.
+2.  **Native attributes**: Use `class` instead of `className`. It is a string in HTML, so it is a string in Cuek.
 3.  **No automatic conversion**: We do not convert camelCase to kebab-case. If you want a CSS variable, just write it as a string.

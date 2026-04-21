@@ -1,5 +1,5 @@
 {
-  "name": "rin-lib",
+  "name": "cuek",
   "version": "0.3.0",
   "type": "module",
   "sideEffects": false,
@@ -40,10 +40,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hulahulaxl/rin.git"
+    "url": "git+https://github.com/hulahulaxl/cuek.git"
   },
   "bugs": {
-    "url": "https://github.com/hulahulaxl/rin/issues"
+    "url": "https://github.com/hulahulaxl/cuek/issues"
   },
-  "homepage": "https://github.com/hulahulaxl/rin#readme"
+  "homepage": "https://github.com/hulahulaxl/cuek#readme"
 }

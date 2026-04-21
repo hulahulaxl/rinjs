@@ -6,12 +6,12 @@
     "strictNullChecks": true,
     "baseUrl": ".",
     "jsx": "react-jsx",
-    "jsxImportSource": "rin-lib",
+    "jsxImportSource": "cuek",
     "paths": {
       "@/*": ["src/*"],
-      "rin-lib": ["../../packages/rin/src/index.ts"],
-      "rin-lib/jsx-runtime": ["../../packages/rin/src/jsx-runtime.ts"],
-      "rin-lib/jsx-dev-runtime": ["../../packages/rin/src/jsx-runtime.ts"]
+      "cuek": ["../../packages/cuek/src/index.ts"],
+      "cuek/jsx-runtime": ["../../packages/cuek/src/jsx-runtime.ts"],
+      "cuek/jsx-dev-runtime": ["../../packages/cuek/src/jsx-runtime.ts"]
     }
   }
 }

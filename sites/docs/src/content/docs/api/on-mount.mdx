@@ -14,7 +14,7 @@ The `onMount()` hook is your entry point for side effects. It runs exactly once,
 You must call `ctx.onMount()` during the initial execution of your component function. 
 
 ```tsx
-import { ComponentContext } from "rin-lib";
+import { ComponentContext } from "cuek";
 
 export default function MyComponent({}, ctx: ComponentContext) {
   ctx.onMount(() => {
@@ -34,4 +34,4 @@ export default function MyComponent({}, ctx: ComponentContext) {
 
 ## Important Note
 
-Unlike hooks in other libraries, `onMount()` does not re-run when your props change. In Rin, your component function only runs once to set things up. This means `onMount()` is truly a "once per lifetime" event for the component instance. If you need to respond to data changes, handle that in your event listeners or via `rerender()`.
+Unlike hooks in other libraries, `onMount()` does not re-run when your props change. In Cuek, your component function only runs once to set things up. This means `onMount()` is truly a "once per lifetime" event for the component instance. If you need to respond to data changes, handle that in your event listeners or via `rerender()`.

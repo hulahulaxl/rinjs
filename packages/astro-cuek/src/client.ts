@@ -1,4 +1,4 @@
-import { mount, jsx } from "rin-lib";
+import { mount, jsx } from "cuek";
 
 export default (element: HTMLElement) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

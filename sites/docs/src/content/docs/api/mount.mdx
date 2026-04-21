@@ -7,12 +7,12 @@ order: 2
 
 # mount()
 
-The `mount()` function is the starting line for every Rin application. It takes your top-level Virtual Node and physically attaches it to the DOM. Until you call `mount()`, your code is just a beautiful idea.
+The `mount()` function is the starting line for every Cuek application. It takes your top-level Virtual Node and physically attaches it to the DOM. Until you call `mount()`, your code is just a beautiful idea.
 
 ## Usage
 
 ```tsx
-import { mount } from "rin-lib";
+import { mount } from "cuek";
 import App from "./App";
 
 // Attach the App to the #root element
@@ -22,10 +22,10 @@ mount(<App />, document.getElementById("root"));
 ### Parameters
 
 - **vnode**: The root JSX element of your application.
-- **container**: (Optional) The target DOM element. If you leave this out, Rin defaults to `document.body`.
+- **container**: (Optional) The target DOM element. If you leave this out, Cuek defaults to `document.body`.
 
 ## How it works
 
-When you call `mount()`, Rin recursively traverses your component tree, creating real DOM nodes as it goes. It also sets up the initial component contexts and registers any lifecycle hooks you have declared.
+When you call `mount()`, Cuek recursively traverses your component tree, creating real DOM nodes as it goes. It also sets up the initial component contexts and registers any lifecycle hooks you have declared.
 
 Once the initial render is complete, `mount()` clears the path for future updates via `rerender()`.

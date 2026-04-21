@@ -5,7 +5,7 @@ import { patchDOM } from "./patch";
 
 export function eventProxy(this: Element, e: Event) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const listeners = (this as any)._rinListeners;
+  const listeners = (this as any)._cuekListeners;
   if (listeners && listeners[e.type]) {
     listeners[e.type](e);
   }
@@ -91,9 +91,9 @@ export function renderNode(vnode: VNode | string, isSvg = false): Node {
       const eventName = key.slice(2).toLowerCase();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const anyEl = el as any;
-      if (!anyEl._rinListeners) anyEl._rinListeners = {};
-      if (!anyEl._rinListeners[eventName]) el.addEventListener(eventName, eventProxy);
-      anyEl._rinListeners[eventName] = value;
+      if (!anyEl._cuekListeners) anyEl._cuekListeners = {};
+      if (!anyEl._cuekListeners[eventName]) el.addEventListener(eventName, eventProxy);
+      anyEl._cuekListeners[eventName] = value;
       continue;
     }
 

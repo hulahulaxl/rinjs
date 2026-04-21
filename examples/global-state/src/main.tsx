@@ -1,4 +1,4 @@
-import { mount, rerender } from "rin-lib";
+import { mount, rerender } from "cuek";
 import { INITIAL_PRODUCTS, cartItems, type Product } from "./store";
 
 function ProductCatalog() {
@@ -63,7 +63,7 @@ function CartSidebar() {
                 </div>
               </li>
             ))}
-            <h1>Rin Global State Test</h1>
+            <h1>Cuek Global State Test</h1>
           </ul>
         )}
         

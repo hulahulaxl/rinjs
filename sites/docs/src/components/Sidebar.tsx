@@ -1,4 +1,4 @@
-import type { ComponentContext } from "rin-lib";
+import type { ComponentContext } from "cuek";
 import { type NavSection } from "../config/navigation";
 
 interface SidebarProps {

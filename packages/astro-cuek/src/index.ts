@@ -1,24 +1,24 @@
 import type { AstroIntegration } from "astro";
 
-export default function rin(): AstroIntegration {
+export default function cuek(): AstroIntegration {
   return {
-    name: "astro-rin",
+    name: "astro-cuek",
     hooks: {
       "astro:config:setup": ({ addRenderer, updateConfig }) => {
         addRenderer({
-          name: "astro-rin",
-          serverEntrypoint: "astro-rin/server",
-          clientEntrypoint: "astro-rin/client",
+          name: "astro-cuek",
+          serverEntrypoint: "astro-cuek/server",
+          clientEntrypoint: "astro-cuek/client",
         });
 
         updateConfig({
           vite: {
             esbuild: {
-              jsxImportSource: "rin-lib",
+              jsxImportSource: "cuek",
               jsx: "automatic",
             },
             optimizeDeps: {
-              include: ["rin-lib"],
+              include: ["cuek"],
             },
           },
         });

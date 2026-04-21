@@ -1,5 +1,5 @@
 {
-  "name": "rin-repo",
+  "name": "cuek-repo",
   "version": "1.0.0",
   "type": "module",
   "description": "",
@@ -10,8 +10,8 @@
     "dev:counter-example": "cd examples/counter && pnpm dev",
     "dev:todo-example": "cd examples/todo && pnpm dev",
     "dev:global-example": "cd examples/global-state && pnpm dev",
-    "build:rin": "cd packages/rin && pnpm build",
-    "build:astro-rin": "cd packages/astro-rin && pnpm build",
+    "build:cuek": "cd packages/cuek && pnpm build",
+    "build:astro-cuek": "cd packages/astro-cuek && pnpm build",
     "build:docs": "cd sites/docs && pnpm build",
     "build:counter-example": "cd examples/counter && pnpm build",
     "build:todo-example": "cd examples/todo && pnpm build",

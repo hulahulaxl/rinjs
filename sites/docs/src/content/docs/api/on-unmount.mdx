@@ -14,7 +14,7 @@ The `onUnmount()` hook is for cleaning up your mess. It runs exactly once, immed
 You must call `ctx.onUnmount()` during the initial execution of your component function.
 
 ```tsx
-import { ComponentContext } from "rin-lib";
+import { ComponentContext } from "cuek";
 
 export default function MyComponent({}, ctx: ComponentContext) {
   let interval: any;
@@ -40,4 +40,4 @@ export default function MyComponent({}, ctx: ComponentContext) {
 
 ## Why it matters
 
-Since Rin does not use magic proxies to track your side effects, it is completely up to you to stop timers, remove event listeners, or cancel network requests. If you forget, your application will eventually slow down and crash. Rin gives you the tools to be a responsible developer. Use them.
+Since Cuek does not use magic proxies to track your side effects, it is completely up to you to stop timers, remove event listeners, or cancel network requests. If you forget, your application will eventually slow down and crash. Cuek gives you the tools to be a responsible developer. Use them.

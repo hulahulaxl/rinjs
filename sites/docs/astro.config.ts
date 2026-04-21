@@ -1,12 +1,12 @@
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import mdx from "@astrojs/mdx";
-import rin from "astro-rin";
+import cuek from "astro-cuek";
 
 // https://astro.build/config
 export default defineConfig({
   trailingSlash: "never",
-  integrations: [rin(), mdx()],
+  integrations: [cuek(), mdx()],
   markdown: {
     shikiConfig: {
       theme: "github-light"

@@ -1,4 +1,4 @@
-import type { ComponentContext } from "rin-lib";
+import type { ComponentContext } from "cuek";
 
 interface HeaderProps {
   showMenu?: boolean;
@@ -53,7 +53,7 @@ export default function Header(props: HeaderProps, _ctx: ComponentContext) {
             >
               <polygon points="12 2 2 22 22 22" />
             </svg>
-            <span>Rin</span>
+            <span>Cuek</span>
           </a>
         </div>
 
@@ -121,7 +121,7 @@ export default function Header(props: HeaderProps, _ctx: ComponentContext) {
           <div class="hidden md:block w-px h-4 bg-zinc-200" />
 
           <a
-            href="https://github.com/hulahulaxl/rin"
+            href="https://github.com/hulahulaxl/cuek"
             target="_blank"
             rel="noreferrer"
             class="p-1.5 rounded-md text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 transition-colors"

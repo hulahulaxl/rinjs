@@ -1,14 +1,14 @@
 export const homepageData = {
   hero: {
-    title: "Rin",
+    title: "Cuek",
     description: "The minimalist, non-reactive view library.",
     primaryCta: {
       text: "Get started",
-      href: "/guide"
+      href: "/guide/introduction"
     },
     secondaryCta: {
       text: "View on GitHub",
-      href: "https://github.com/hulahulaxl/rin"
+      href: "https://github.com/hulahulaxl/cuek"
     }
   },
   codeSnippet: {
@@ -36,7 +36,7 @@ export const homepageData = {
     {
       title: "Feather-weight Core",
       description:
-        "A tiny footprint with zero unnecessary abstractions. Rin provides only the essential foundation needed to build fast interfaces, eliminating the overhead of traditional frameworks.",
+        "A tiny footprint with zero unnecessary abstractions. Cuek provides only the essential foundation needed to build fast interfaces, eliminating the overhead of traditional frameworks.",
       iconPath:
         "M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"
     },

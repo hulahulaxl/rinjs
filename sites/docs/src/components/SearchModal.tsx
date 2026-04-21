@@ -1,4 +1,4 @@
-import type { ComponentContext } from "rin-lib";
+import type { ComponentContext } from "cuek";
 
 interface SearchResult {
   url: string;
@@ -26,7 +26,7 @@ export default function SearchModal(
         await pagefind.init();
       } catch {
         // eslint-disable-next-line no-console
-        console.warn("Rin SearchModal: pagefind not found. Is it built?");
+        console.warn("Cuek SearchModal: pagefind not found. Is it built?");
       }
     }
   };
@@ -48,7 +48,7 @@ export default function SearchModal(
 
     setTimeout(() => {
       const input = document.getElementById(
-        "rin-search-input"
+        "cuek-search-input"
       ) as HTMLInputElement | null;
       if (input) input.focus();
     }, 50);
@@ -105,7 +105,7 @@ export default function SearchModal(
 
   return () => {
     if (!isOpen) {
-      // Return a hidden root node to satisfy Rin's single-root rule
+      // Return a hidden root node to satisfy Cuek's single-root rule
       return (
         <div style="display:none" id="search-modal-hidden" aria-hidden="true" />
       );
@@ -137,7 +137,7 @@ export default function SearchModal(
               />
             </svg>
             <input
-              id="rin-search-input"
+              id="cuek-search-input"
               class="flex-1 ml-3 bg-transparent text-zinc-900 placeholder:text-zinc-400 focus:outline-none"
               placeholder="Search documentation..."
               value={query}

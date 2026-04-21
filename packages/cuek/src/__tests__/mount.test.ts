@@ -51,11 +51,11 @@ describe("mount.ts", () => {
       return () => jsx("span", { children: props.name });
     }
 
-    const vnode = jsx(TestComp, { name: "Rin" });
+    const vnode = jsx(TestComp, { name: "Cuek" });
     const node = renderNode(vnode) as HTMLElement;
 
     expect(node.tagName).toBe("SPAN");
-    expect(node.textContent).toBe("Rin");
+    expect(node.textContent).toBe("Cuek");
 
     // Check that context is populated
     expect(internalCtx!).toBeDefined();

@@ -13,8 +13,8 @@ function updateProps(
       if (key.startsWith("on") && typeof oldProps[key] === "function") {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const anyEl = el as any;
-        if (anyEl._rinListeners) {
-          anyEl._rinListeners[key.slice(2).toLowerCase()] = undefined;
+        if (anyEl._cuekListeners) {
+          anyEl._cuekListeners[key.slice(2).toLowerCase()] = undefined;
         }
       } else if (key === "innerHTML") {
         el.innerHTML = "";
@@ -37,9 +37,9 @@ function updateProps(
       const eventName = key.slice(2).toLowerCase();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const anyEl = el as any;
-      if (!anyEl._rinListeners) anyEl._rinListeners = {};
-      if (!anyEl._rinListeners[eventName]) el.addEventListener(eventName, eventProxy);
-      anyEl._rinListeners[eventName] = newValue;
+      if (!anyEl._cuekListeners) anyEl._cuekListeners = {};
+      if (!anyEl._cuekListeners[eventName]) el.addEventListener(eventName, eventProxy);
+      anyEl._cuekListeners[eventName] = newValue;
       continue;
     }
 

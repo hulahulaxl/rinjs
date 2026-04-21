@@ -4,9 +4,9 @@ import { defineConfig } from "vite";
 export default defineConfig({
   build: {
     lib: {
-      entry: path.resolve(__dirname, "packages/rin/src/index.ts"),
-      name: "Rin",
-      fileName: "rin",
+      entry: path.resolve(__dirname, "packages/cuek/src/index.ts"),
+      name: "Cuek",
+      fileName: "cuek",
     },
   },
 });

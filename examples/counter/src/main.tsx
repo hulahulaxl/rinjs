@@ -1,4 +1,4 @@
-import { mount, type ComponentContext } from "rin-lib";
+import { mount, type ComponentContext } from "cuek";
 
 function CounterDisplay(props: { count: number }) {
   // We read from props.count inside the render closure so it sees the latest value
@@ -68,7 +68,7 @@ mount(
       padding: "40px"
     }}
   >
-    <h1>Rin Counter Test</h1>
+    <h1>Cuek Counter Test</h1>
     <Counter initialValue={50} />
   </div>,
   document.querySelector<HTMLDivElement>("#app")!

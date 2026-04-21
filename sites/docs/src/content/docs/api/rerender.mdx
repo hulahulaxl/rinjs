@@ -7,14 +7,14 @@ order: 5
 
 # rerender()
 
-The global `rerender()` utility is how you tell Rin that something has changed and the UI needs to catch up. It is the manual override for state updates.
+The global `rerender()` utility is how you tell Cuek that something has changed and the UI needs to catch up. It is the manual override for state updates.
 
 ## Usage
 
 You can target specific components or groups of components.
 
 ```tsx
-import { rerender } from "rin-lib";
+import { rerender } from "cuek";
 import MyComponent from "./MyComponent";
 
 // Option 1: Rerender every instance of a specific component type
@@ -35,4 +35,4 @@ Local updates usually happen via `ctx.rerender()`. Use the global `rerender()` u
 1.  **Global state changed**: You updated a variable outside of any component and need the UI to reflect it.
 2.  **Cross-component communication**: You need one component to trigger an update in another without passing props through a parent.
 
-It is explicit and fast. If you tell Rin to rerender, it rerenders. If you do not, it stays quiet.
+It is explicit and fast. If you tell Cuek to rerender, it rerenders. If you do not, it stays quiet.

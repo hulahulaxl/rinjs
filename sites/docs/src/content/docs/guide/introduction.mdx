@@ -1,6 +1,6 @@
 ---
 title: Introduction
-description: Welcome to Rin, the hyper-minimalist JSX framework.
+description: Welcome to Cuek, the hyper-minimalist JSX framework.
 category: Getting Started
 order: 1
 ---
@@ -8,9 +8,9 @@ order: 1
 # Introduction
 
 > [⚠️ WARNING]
-> **Early Development Notice:** Rin is a highly experimental project currently in early development. The APIs can and will break fast without warning. Oh, and this library, along with the documentation you are reading right now, was built mostly by an AI. Proceed accordingly.
+> **Early Development Notice:** Cuek is a highly experimental project currently in early development. The APIs can and will break fast without warning. Oh, and this library, along with the documentation you are reading right now, was built mostly by an AI. Proceed accordingly.
 
-Rin is a hyper-minimalist JSX library for developers who are officially done with the reactivity circus. We stripped away the magic, the proxies, and the "why is my component rerendering 50 times?" headaches.
+Cuek is a hyper-minimalist JSX library for developers who are officially done with the reactivity circus. We stripped away the magic, the proxies, and the "why is my component rerendering 50 times?" headaches.
 
 ## The Reactivity Trap
 
@@ -20,15 +20,15 @@ The reality is a nightmare. Reactivity makes it easy to update a list, but it ma
 
 In React, you have to wrap your life in hooks. `useState`, `useEffect`, `useCallback`... it never ends. You end up spending more time fighting the framework's rules than actually writing your app. Then, because the magic is too confusing, you install a massive state management library to try and fix the the mess the framework made in the first place.
 
-### The Rin Way
+### The Cuek Way
 
-Rin is different because we simply stop caring about reactivity. We trade the "magic" for absolute control.
+Cuek is different because we simply stop caring about reactivity. We trade the "magic" for absolute control.
 
 - **No magic hooks**: You want a variable? Use `let`.
 - **Plain JavaScript**: It's just code. No proxies. No observers.
 - **Explicit updates**: You change the data, then you call `ctx.rerender()`. You are the boss.
 
-Every React developer has done it. You have reached for that one pattern in a moment of pure desperation. If you have ever felt dirty for using a "force update" in React to fix a bug, welcome home. Rin is built on that exact feeling.
+Every React developer has done it. You have reached for that one pattern in a moment of pure desperation. If you have ever felt dirty for using a "force update" in React to fix a bug, welcome home. Cuek is built on that exact feeling.
 
 In React, you have to do this embarrassing dance just to refresh the UI manually:
 
@@ -42,7 +42,7 @@ const handleUpdate = () => {
 };
 ```
 
-In Rin, explicit updates are the first-class residents. No hacks required.
+In Cuek, explicit updates are the first-class residents. No hacks required.
 
 ```tsx
 function Counter({}, ctx) {
@@ -52,7 +52,7 @@ function Counter({}, ctx) {
   return () => (
     <div>
       <p>Count: {count}</p>
-      {/* You change the data, then you tell Rin to update. Explicit. Brutal. */}
+      {/* You change the data, then you tell Cuek to update. Explicit. Brutal. */}
       <button
         onclick={() => {
           count++;
@@ -74,6 +74,6 @@ JSX is the best way to describe a UI in JavaScript, period. We kept the beautifu
 
 ## What is with the name?
 
-You might be wondering where the name **Rin** comes from. It actually started with the word **Lean**. We wanted something that described the philosophy of the library, but "Lean" is a generic word that has been used by every mediocre startup since 2012.
+You might be wondering where the name **Cuek** comes from. It comes from an Indonesian slang word that translates roughly to _indifferent, unbothered, or ignoring the noise_.
 
-We wanted something sharper. **Rin** sounds Japanese, looks cool on a sticker, and stays true to the "Lean" roots without the corporate baggage.
+In React, the UI stresses out over every state change. Cuek just sits there. It is completely unbothered by your data updates until you explicitly tell it to move. It's the UI library that doesn't care until you tell it to.

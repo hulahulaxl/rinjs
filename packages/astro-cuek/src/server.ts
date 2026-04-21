@@ -1,4 +1,4 @@
-import { renderToString, jsx } from "rin-lib";
+import { renderToString, jsx } from "cuek";
 
 function check(Component: unknown, _props: Record<string, unknown>, _children: unknown) {
   if (typeof Component !== 'function') return false;

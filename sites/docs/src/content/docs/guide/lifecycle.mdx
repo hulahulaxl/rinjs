@@ -7,11 +7,11 @@ order: 4
 
 # Lifecycle
 
-Rin keeps the concept of a lifecycle simple. We have exactly two lifecycle hooks: `onMount` and `onUnmount`. They do exactly what they say. No hidden dependencies. No unexpected updates when props change.
+Cuek keeps the concept of a lifecycle simple. We have exactly two lifecycle hooks: `onMount` and `onUnmount`. They do exactly what they say. No hidden dependencies. No unexpected updates when props change.
 
 ## Mounting and Unmounting
 
-In Rin, a component is mounted once and unmounted once. That is it. If you need to do something when the component appears or disappears, we have you covered.
+In Cuek, a component is mounted once and unmounted once. That is it. If you need to do something when the component appears or disappears, we have you covered.
 
 ### onMount()
 
@@ -19,14 +19,14 @@ This runs once after the component is first inserted into the DOM. This is where
 
 ### onUnmount()
 
-This runs once when the component is being removed from the DOM. If you forget to clean up your logic here, you might leave a memory leak. Rin relies on you to clean up your own resources.
+This runs once when the component is being removed from the DOM. If you forget to clean up your logic here, you might leave a memory leak. Cuek relies on you to clean up your own resources.
 
 ## Full Example: The Timer
 
-Here is a complete application that uses both hooks to manage a simple interval. Notice how we do not need a complex array of dependencies to tell Rin when to stop.
+Here is a complete application that uses both hooks to manage a simple interval. Notice how we do not need a complex array of dependencies to tell Cuek when to stop.
 
 ```tsx
-import { ComponentContext } from "rin-lib";
+import { ComponentContext } from "cuek";
 
 export default function Timer({}, ctx: ComponentContext) {
   let seconds = 0;

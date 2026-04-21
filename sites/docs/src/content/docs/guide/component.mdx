@@ -7,11 +7,11 @@ order: 3
 
 # Your First Application
 
-Now that you have survived the installation, it is time to actually build something. Rin components are just functions that return a function. It is that simple. If you can handle a basic JavaScript closure, you can handle Rin.
+Now that you have survived the installation, it is time to actually build something. Cuek components are just functions that return a function. It is that simple. If you can handle a basic JavaScript closure, you can handle Cuek.
 
 ## The Example
 
-We are going to build a counter. It is not exactly original, but it perfectly illustrates how Rin handles props, state, and updates without any framework magic.
+We are going to build a counter. It is not exactly original, but it perfectly illustrates how Cuek handles props, state, and updates without any framework magic.
 
 ### index.html
 
@@ -33,7 +33,7 @@ You need a place for your app to live. A simple `div` with an `id` is all you ne
 This is your actual component. Notice the total lack of `useState` or complex hooks.
 
 ```tsx
-import { ComponentContext } from "rin-lib";
+import { ComponentContext } from "cuek";
 
 interface Props {
   title: string;
@@ -64,21 +64,21 @@ export default function Counter(props: Props, ctx: ComponentContext) {
 The entry point that ties it all together.
 
 ```tsx
-import { mount } from "rin-lib";
+import { mount } from "cuek";
 import Counter from "./Counter";
 
 const root = document.getElementById("app");
 if (root) {
   // Mount the component to the DOM.
-  mount(root, <Counter title="Rin Counter" />);
+  mount(root, <Counter title="Cuek Counter" />);
 }
 ```
 
 ## How it works
 
-There are three things you need to understand here. They are simple but fundamental to how Rin works.
+There are three things you need to understand here. They are simple but fundamental to how Cuek works.
 
-1.  **Props**: They are just the first argument to your function. They do not magically trigger updates because nothing in Rin is magical.
+1.  **Props**: They are just the first argument to your function. They do not magically trigger updates because nothing in Cuek is magical.
 2.  **State**: It is literally just a variable inside your function's scope. since your component returns a function (the render function), it forms a natural closure over that variable. It stays alive as long as the component is mounted.
 3.  **Rerendering**: When you change your data, the DOM has no idea. You have to tell it by calling `ctx.rerender()`. This calls your render function again, compares the result to the previous one, and patches only the parts of the DOM that actually changed.
 
@@ -97,9 +97,9 @@ function Display({ count }) {
 }
 ```
 
-Rin components only run **once** when they mount. This creates a closure over the variables in that function. If you destructure a primitive like a number or a string, you are locking in that initial value forever. 
+Cuek components only run **once** when they mount. This creates a closure over the variables in that function. If you destructure a primitive like a number or a string, you are locking in that initial value forever. 
 
-When a component updates, Rin mutates the underlying `props` object reference. To see those changes, your render function must read directly from that reference:
+When a component updates, Cuek mutates the underlying `props` object reference. To see those changes, your render function must read directly from that reference:
 
 ```tsx
 // ✅ DO THIS INSTEAD
@@ -121,12 +121,12 @@ function Display(props) {
 }
 ```
 
-Rin does not use "magic proxies" to intercept your destructured variables. It is just plain JavaScript doing exactly what you told it to do.
+Cuek does not use "magic proxies" to intercept your destructured variables. It is just plain JavaScript doing exactly what you told it to do.
 
 ### A Feature or a Flaw?
 
 Honestly, both. We openly admit that not being able to destructure primitive props is a Developer Experience (DX) weakness compared to heavier frameworks. 
 
-But this is the exact trade-off Rin makes intentionally. We chose plain JavaScript predictability over compiler magic or reactive proxies. By forcing you to read directly from `props`, we guarantee your closures behave exactly like normal JavaScript closures always have. 
+But this is the exact trade-off Cuek makes intentionally. We chose plain JavaScript predictability over compiler magic or reactive proxies. By forcing you to read directly from `props`, we guarantee your closures behave exactly like normal JavaScript closures always have. 
 
 No hidden mechanics. No surprises.

@@ -1,5 +1,5 @@
 {
-  "name": "astro-rin",
+  "name": "astro-cuek",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -18,6 +18,6 @@
   },
   "peerDependencies": {
     "astro": ">=4.0.0",
-    "rin-lib": "workspace:*"
+    "cuek": "workspace:*"
   }
 }
