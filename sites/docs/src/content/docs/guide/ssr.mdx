@@ -1,0 +1,24 @@
+---
+title: Server-Side Rendering
+description: How Rin brings server-rendered HTML to life.
+category: Core Concepts
+order: 6
+---
+
+# Server-Side Rendering
+
+Rin is a client-side library at its core. It lives and breathes in the browser. However, we are not primitive. We know that sometimes you need to render your UI on the server for SEO or performance reasons.
+
+## renderToString
+
+Rin provides a `renderToString` utility for those rare moments when you need to turn your components into static HTML strings. It works exactly how you would expect: it takes a VNode and gives you a serialized HTML string.
+
+No fancy hydration magic is included here. If you want your components to be interactive on the client, you need to mount them using the standard `mount()` function or use a framework that handles the hydration for you.
+
+## The Astro Way
+
+Unless you enjoy building your own SSR engine from scratch, we highly recommend using a framework like **Astro**.
+
+In fact, this entire documentation site is built using Astro and Rin. We even created a simple `astro-rin` integration package to handle the heavy lifting of server rendering and client-side distribution. While it is not officially published on npm yet, it is what powers the very pages you are reading right now.
+
+Using Rin with Astro gives you the best of both worlds: static performance with the option to add islands of hyper-minimalist interactivity exactly where you need them. No bloat. No compromise.

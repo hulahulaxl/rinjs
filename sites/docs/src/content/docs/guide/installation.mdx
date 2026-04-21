@@ -1,0 +1,51 @@
+---
+title: Installation
+description: Learn how to set up your first Rin project.
+category: Getting Started
+order: 2
+---
+
+# Installation
+
+Installing Rin is simple.
+
+## Step 1: Install the library
+
+Throw this into your terminal.
+
+```bash
+npm i rin-lib
+```
+
+## Step 2: Update your tsconfig
+
+TypeScript needs to know you are not using React. You need to be explicit with your configuration. Update your `tsconfig.json` so it actually understands who is in charge of your JSX.
+
+```json
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "rin-lib"
+  }
+}
+```
+
+## Step 3: Hello World
+
+Here is exactly how you get your first Rin component on the screen.
+
+```tsx
+import { mount } from "rin-lib";
+
+function App() {
+  return () => <h1>Hello World</h1>;
+}
+
+mount(document.getElementById("app"), <App />);
+```
+
+That is it. You are done. Go build something.
+
+## Use a real bundler
+
+We recommend using **Vite** because it is fast and modern. However, Rin is designed to be bundler-agnostic. Whether you use Webpack, Rollup, or even build your own custom system from scratch, Rin will work exactly how you expect.

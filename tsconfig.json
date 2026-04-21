@@ -5,9 +5,8 @@
     "declaration": true,
     "outDir": "dist",
     "skipLibCheck": true,
-    "baseUrl": ".",
     "paths": {
-      "rin-lib": ["packages/rin/src"]
+      "rin-lib": ["./packages/rin/src"]
     },
 
     /* Bundler mode */

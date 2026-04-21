@@ -1,0 +1,62 @@
+---
+title: Lifecycle
+description: Managing component mounting and unmounting.
+category: Core Concepts
+order: 4
+---
+
+# Lifecycle
+
+Rin keeps the concept of a lifecycle simple. We have exactly two lifecycle hooks: `onMount` and `onUnmount`. They do exactly what they say. No hidden dependencies. No unexpected updates when props change.
+
+## Mounting and Unmounting
+
+In Rin, a component is mounted once and unmounted once. That is it. If you need to do something when the component appears or disappears, we have you covered.
+
+### onMount()
+
+This runs once after the component is first inserted into the DOM. This is where you set up your event listeners, timers, or fetch your data.
+
+### onUnmount()
+
+This runs once when the component is being removed from the DOM. If you forget to clean up your logic here, you might leave a memory leak. Rin relies on you to clean up your own resources.
+
+## Full Example: The Timer
+
+Here is a complete application that uses both hooks to manage a simple interval. Notice how we do not need a complex array of dependencies to tell Rin when to stop.
+
+```tsx
+import { ComponentContext } from "rin-lib";
+
+export default function Timer({}, ctx: ComponentContext) {
+  let seconds = 0;
+  let interval: any;
+
+  ctx.onMount(() => {
+    console.log("Timer mounted. Starting interval.");
+    interval = setInterval(() => {
+      seconds++;
+      // We tell the UI to update. Explicitly.
+      ctx.rerender();
+    }, 1000);
+  });
+
+  ctx.onUnmount(() => {
+    console.log("Timer unmounting. Cleaning up.");
+    clearInterval(interval);
+  });
+
+  return () => (
+    <div class="timer">
+      <h3>Time elapsed: {seconds}s</h3>
+      <p>This timer cleans itself up because it has manners.</p>
+    </div>
+  );
+}
+```
+
+## How to use it
+
+You just call `ctx.onMount` and `ctx.onUnmount` inside your component function. Since the component function only runs once when it is created, these hooks are registered exactly once.
+
+There is no "re-running logic" every time the UI updates. The render function (the one you return) keeps things fast, while the lifecycle hooks keep things organized. No magic. No headache.

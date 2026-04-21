@@ -1,0 +1,37 @@
+---
+title: onMount()
+description: API reference for the onMount lifecycle hook.
+category: Lifecycle API
+order: 3
+---
+
+# onMount()
+
+The `onMount()` hook is your entry point for side effects. It runs exactly once, immediately after your component has been physically inserted into the DOM.
+
+## Usage
+
+You must call `ctx.onMount()` during the initial execution of your component function. 
+
+```tsx
+import { ComponentContext } from "rin-lib";
+
+export default function MyComponent({}, ctx: ComponentContext) {
+  ctx.onMount(() => {
+    console.log("I am now part of the DOM.");
+    
+    // Fetch some data or start a timer
+    const data = fetchData();
+  });
+
+  return () => <div>Check the console</div>;
+}
+```
+
+### Parameters
+
+- **callback**: A function that contains the logic you want to run after the component mounts.
+
+## Important Note
+
+Unlike hooks in other libraries, `onMount()` does not re-run when your props change. In Rin, your component function only runs once to set things up. This means `onMount()` is truly a "once per lifetime" event for the component instance. If you need to respond to data changes, handle that in your event listeners or via `rerender()`.

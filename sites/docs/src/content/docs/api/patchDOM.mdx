@@ -1,0 +1,35 @@
+---
+title: patchDOM()
+description: API reference for the patchDOM function.
+category: Core API
+order: 6
+---
+
+# patchDOM()
+
+The `patchDOM()` function is the engine under the hood of Rin. It is responsible for the recursive reconciliation process that makes Rin fast.
+
+## Usage
+
+You should almost never call this function directly. Rin handles this for you automatically when you call `mount()` or `rerender()`. 
+
+```tsx
+import { patchDOM } from "rin-lib";
+
+// Internal usage (Simplified)
+const updatedNode = patchDOM(domNode, oldVNode, newVNode);
+```
+
+### Parameters
+
+- **dom**: The physical DOM element being patched.
+- **oldVNode**: The virtual representation of what is currently on the screen.
+- **newVNode**: The virtual representation of what you want to appear.
+
+### Returns
+
+- **Node**: The physical DOM node after the patch is applied. Note that Rin may replace the node entirely if the tag type changes.
+
+## Why it exists
+
+Rin is designed for explicit control. `patchDOM()` is the piece of code that compares two virtual trees and applies the minimal set of changes to the real DOM. We expose it for power users who are building their own frameworks or complex integrations, but for 99% of developers, it is an implementation detail.

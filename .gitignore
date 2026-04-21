@@ -26,3 +26,6 @@ dist-ssr
 
 # generated csv test files
 scripts/out/*
+
+**/.astro
+**/coverage

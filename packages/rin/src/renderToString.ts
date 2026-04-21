@@ -46,13 +46,12 @@ export function renderToString(vnode: VNode | string): string {
   let html = `<${tagName}`;
 
   for (const key in vnode.props) {
-    let attrName = key;
+    const attrName = key;
     const value = vnode.props[key];
 
     if (value == null) continue;
 
-    // React-like className to class
-    if (attrName === "className") attrName = "class";
+    if (value == null) continue;
 
     if (attrName.startsWith("on") && typeof value === "function") {
       continue; // Skip event listeners

@@ -11,7 +11,10 @@ function normalizeChildren(children: unknown[]): (VNode | string)[] {
         if (typeof c === "object" && "type" in c) {
           result.push(c as VNode);
         } else {
-          result.push(String(c));
+          const str = String(c);
+          // Skip empty strings — JS && short-circuit returns "" for falsy queries
+          // e.g. `query && results.length > 0 && <div>` → "" when query=""
+          if (str !== "") result.push(str);
         }
       }
     }
@@ -20,12 +23,29 @@ function normalizeChildren(children: unknown[]): (VNode | string)[] {
   return result;
 }
 
+export const Fragment = Symbol("Fragment");
+
 export function jsx(
-  type: VNode["type"],
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  type: VNode["type"] | symbol | any,
   props: Record<string, unknown> | null,
   key?: string | number
-): VNode {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+): any {
   const { children, ...rest } = props ?? {};
+
+  const normalizedChildren = normalizeChildren(
+    children === undefined
+      ? []
+      : Array.isArray(children)
+        ? children
+        : [children]
+  );
+
+  if (type === Fragment) {
+    return normalizedChildren;
+  }
+
   if (key != null) {
     rest.key = key;
   }
@@ -33,13 +53,7 @@ export function jsx(
   return {
     type,
     props: rest,
-    children: normalizeChildren(
-      children === undefined
-        ? []
-        : Array.isArray(children)
-          ? children
-          : [children]
-    )
+    children: normalizedChildren
   };
 }
 
@@ -50,17 +64,46 @@ type ElementType = keyof HTMLElementTagNameMap;
 
 type DOMProps<K extends ElementType> = Omit<
   Partial<HTMLElementTagNameMap[K]>,
-  "children" | "style"
+  "children" | "style" | "className"
 > & {
+  class?: string;
   style?: Partial<CSSStyleDeclaration> | string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ref?: (el: any) => void;
   key?: string | number;
+
+  [key: `aria-${string}`]: unknown;
+  [key: `data-${string}`]: unknown;
 };
 
-type Props<K extends ElementType> = DOMProps<K> & {
-  children?: JSX.Child | JSX.Child[];
-};
+interface AriaAttributes {
+  "aria-hidden"?: boolean | "true" | "false";
+  "aria-label"?: string;
+  "aria-labelledby"?: string;
+  "aria-describedby"?: string;
+  "aria-expanded"?: boolean | "true" | "false";
+  "aria-checked"?: boolean | "mixed" | "true" | "false";
+  "aria-current"?:
+    | boolean
+    | "page"
+    | "step"
+    | "location"
+    | "date"
+    | "time"
+    | "true"
+    | "false";
+  "aria-disabled"?: boolean | "true" | "false";
+  "aria-controls"?: string;
+  "aria-live"?: "off" | "assertive" | "polite";
+  "aria-modal"?: boolean | "true" | "false";
+  "aria-selected"?: boolean | "true" | "false";
+  "aria-invalid"?: boolean | "grammar" | "spelling" | "true" | "false";
+}
+
+type Props<K extends ElementType> = DOMProps<K> &
+  AriaAttributes & {
+    children?: JSX.Child | JSX.Child[];
+  };
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace JSX {
@@ -93,7 +136,30 @@ export namespace JSX {
     children: (VNode | string)[];
   }
 
+  export type RelaxedSVGProps<K extends keyof SVGElementTagNameMap> = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [P in keyof SVGElementTagNameMap[K]]?: any; // Native keys with relaxed types for intellisense
+  } & {
+    class?: string;
+    style?: string | Partial<CSSStyleDeclaration>;
+    children?: JSX.Child | JSX.Child[];
+
+    // Common SVG dashed attributes missing from native DOM interfaces
+    "fill-rule"?: "nonzero" | "evenodd" | "inherit";
+    "clip-rule"?: "nonzero" | "evenodd" | "inherit";
+    "stroke-width"?: number | string;
+    "stroke-linecap"?: "butt" | "round" | "square" | "inherit";
+    "stroke-linejoin"?: "miter" | "round" | "bevel" | "inherit";
+    "stroke-dasharray"?: string | number;
+    "stroke-dashoffset"?: string | number;
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+  } & AriaAttributes;
+
   export type IntrinsicElements = {
     [K in keyof HTMLElementTagNameMap]: Props<K>;
+  } & {
+    [K in keyof SVGElementTagNameMap]: RelaxedSVGProps<K>;
   };
 }

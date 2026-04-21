@@ -1,0 +1,32 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header";
+import SearchModal from "../components/SearchModal";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "The hyper-minimalist JSX framework." } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  </head>
+  <body class="bg-white text-zinc-900 min-h-screen flex flex-col selection:bg-zinc-900 selection:text-white antialiased">
+    <Header client:load showMenu={false} currentPath={currentPath} />
+    <slot />
+    <SearchModal client:load />
+  </body>
+</html>

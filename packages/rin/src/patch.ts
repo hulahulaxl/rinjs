@@ -16,6 +16,8 @@ function updateProps(
         if (anyEl._rinListeners) {
           anyEl._rinListeners[key.slice(2).toLowerCase()] = undefined;
         }
+      } else if (key === "innerHTML") {
+        el.innerHTML = "";
       } else if (key === "style") {
         el.style.cssText = "";
       } else {
@@ -43,6 +45,11 @@ function updateProps(
 
     if (key === "ref" && typeof newValue === "function") {
       setTimeout(() => newValue(el), 0);
+      continue;
+    }
+
+    if (key === "innerHTML" && typeof newValue === "string") {
+      if (oldValue !== newValue) el.innerHTML = newValue;
       continue;
     }
 
@@ -80,10 +87,13 @@ function updateProps(
 export function patchDOM(
   domNode: Node,
   oldVNode: VNode,
-  newVNode: VNode
+  newVNode: VNode,
+  isSvg = false
 ): Node {
+  const isNodeSvg = isSvg || (domNode instanceof Element && domNode.namespaceURI === "http://www.w3.org/2000/svg");
+
   if (oldVNode.type !== newVNode.type) {
-    const newNode = renderNode(newVNode);
+    const newNode = renderNode(newVNode, isNodeSvg);
     if (domNode.parentNode) {
       executeUnmount(domNode);
       domNode.parentNode.replaceChild(newNode, domNode);
@@ -116,7 +126,7 @@ export function patchDOM(
       }
     }
 
-    const newNode = renderNode(newVNode);
+    const newNode = renderNode(newVNode, isNodeSvg);
     if (domNode.parentNode) {
       executeUnmount(domNode);
       domNode.parentNode.replaceChild(newNode, domNode);
@@ -131,12 +141,18 @@ export function patchDOM(
   const oldChildren = oldVNode.children;
   const newChildren = newVNode.children;
 
+  // Snapshot DOM children ONCE before either loop runs.
+  // el.childNodes is a live NodeList — any insertion, removal or replaceChild
+  // during patching will shift indices. Using a frozen array in both loops
+  // keeps the VNode↔DOM pairing consistent throughout.
+  const domSnapshot = Array.from(el.childNodes);
+
   let oldKeyed: Map<string, { vnode: VNode; node: Node }> | undefined;
   let oldUnkeyed: ({ vnode: VNode | string; node: Node } | null)[] | undefined;
 
   for (let i = 0; i < oldChildren.length; i++) {
     const oldChild = oldChildren[i];
-    const childNode = el.childNodes[i];
+    const childNode = domSnapshot[i];  // ← use snapshot, not live NodeList
     if (!childNode) continue;
 
     if (
@@ -193,7 +209,7 @@ export function patchDOM(
     let finalNode: Node;
 
     if (!matchedNode || !matchedOldVNode) {
-      finalNode = renderNode(newChild);
+      finalNode = renderNode(newChild, isNodeSvg);
     } else {
       if (typeof matchedOldVNode === "string" || typeof newChild === "string") {
         if (typeof matchedOldVNode === "string" && typeof newChild === "string") {
@@ -206,19 +222,28 @@ export function patchDOM(
           }
           finalNode = matchedNode;
         } else {
-          finalNode = renderNode(newChild);
+          // Old was a string/text node, new is an element (or vice versa).
+          // executeUnmount only fires lifecycle callbacks — it does NOT remove
+          // the node from the DOM. We must explicitly remove it here or it
+          // becomes an invisible ghost that corrupts future VNode/DOM pairing.
+          finalNode = renderNode(newChild, isNodeSvg);
           executeUnmount(matchedNode);
+          if (matchedNode.parentNode) {
+            matchedNode.parentNode.removeChild(matchedNode);
+          }
         }
       } else {
         finalNode = patchDOM(
           matchedNode,
           matchedOldVNode as VNode,
-          newChild as VNode
+          newChild as VNode,
+          isNodeSvg
         );
       }
     }
 
-    const referenceNode = el.childNodes[i] || null;
+    const referenceNode = el.childNodes[i] ?? null;
+
     if (referenceNode !== finalNode) {
       el.insertBefore(finalNode, referenceNode);
     }

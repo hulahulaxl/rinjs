@@ -1,5 +1,10 @@
 import { mount, type ComponentContext } from "rin-lib";
 
+function CounterDisplay(props: { count: number }) {
+  // We read from props.count inside the render closure so it sees the latest value
+  return () => <p style={{ fontSize: "2rem" }}>Count: {props.count}</p>;
+}
+
 type Props = { initialValue: number };
 
 function Counter({ initialValue }: Props, ctx: ComponentContext) {
@@ -30,7 +35,7 @@ function Counter({ initialValue }: Props, ctx: ComponentContext) {
     <div
       style={{ padding: "20px", border: "1px solid white", marginTop: "20px" }}
     >
-      <p style={{ fontSize: "2rem" }}>Count: {count}</p>
+      <CounterDisplay count={count} />
 
       <div style={{ marginBottom: "20px" }}>
         <label style={{ display: "block", marginBottom: "10px" }}>

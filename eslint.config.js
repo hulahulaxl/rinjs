@@ -6,6 +6,9 @@ import tseslint from "typescript-eslint";
 
 export default defineConfig([
   {
+    ignores: ["**/dist/**", "**/.astro/**", "**/node_modules/**"]
+  },
+  {
     files: ["**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}"],
     plugins: { js },
     extends: ["js/recommended"],

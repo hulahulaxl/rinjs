@@ -1,0 +1,80 @@
+---
+title: State Management
+description: State management in Rin
+category: Core Concepts
+order: 5
+---
+
+# State Management
+
+Most frameworks want you to believe that state management is a complex science requiring specialized libraries and providers. Rin disagrees. In Rin, state management is just JavaScript.
+
+## Use Whatever You Want
+
+Since Rin components do not rely on magic proxies or observers, your "Store" can be literally anything. We like simple JS variables and functions because they are easy to reason about, but we do not enforce it.
+
+If you want to use a state management library, go for it. If you want to use a class, a Map, or a custom event bus, Rin does not care as long as you can access the data from your components. As long as it is accessible, it works.
+
+If your data lives outside your components, you simply import it and use it. The only thing you need to handle is telling Rin when that data changes.
+
+## Explicit Rerendering
+
+There are three ways to trigger a rerender in Rin, depending on what you are trying to accomplish.
+
+1.  **Component Level**: Use `ctx.rerender()` inside a component to update only that specific instance.
+2.  **Type Level**: Import the global `rerender` utility and pass it a component function. This will update every single instance of that component type across your entire application.
+3.  **Group Level**: Pass a `group="id"` prop to any component instance. Then call `rerender("id")` to update all components sharing that group ID.
+
+## Full Example: Shared Global State
+
+Here is a complete example showing how two separate components can share and update a global counter.
+
+```tsx
+import { mount, rerender, ComponentContext } from "rin-lib";
+
+// This is your "Global Store". It is just a plain object.
+const store = {
+  count: 0
+};
+
+// Component A: Controls the data
+function Controls({}, ctx: ComponentContext) {
+  const increment = () => {
+    store.count++;
+    // We want all Display component to update
+    rerender(Display);
+  };
+
+  return () => (
+    <div class="panel">
+      <button onclick={increment}>Increment Global Count</button>
+    </div>
+  );
+}
+
+// Component B: Displays the data
+function Display({}, ctx: ComponentContext) {
+  return () => <div class="stat">Current count is: {store.count}</div>;
+}
+
+// Layout: Connect them via groups
+function App() {
+  return () => (
+    <div class="app">
+      <h1>Global Management</h1>
+
+      <Controls />
+      <Display />
+    </div>
+  );
+}
+
+mount(document.getElementById("app"), <App />);
+```
+
+## How it works
+
+1.  **The Store**: We defined a simple `store` object. It has no special powers and does not know about Rin.
+2.  **Rerender**: When Step 1 happens (the store is updated), we call `rerender(Display)`. Rin looks up all Display components and tells them to refresh themselves.
+
+It is explicit. It is performant. And you do not need 50kb of state management code to make it work.

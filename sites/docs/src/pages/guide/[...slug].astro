@@ -1,0 +1,21 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
+import DocLayout from '../../layouts/DocLayout.astro';
+
+export async function getStaticPaths() {
+  const guideEntries = await getCollection('docs', ({ id }: CollectionEntry<'docs'>) => {
+    return id.startsWith('guide/');
+  });
+  return guideEntries.map((entry: CollectionEntry<'docs'>) => ({
+    params: { slug: entry.id.replace('guide/', '').replace(/\.(md|mdx)$/, '') }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props as { entry: CollectionEntry<'docs'> };
+const { Content } = await render(entry);
+---
+
+<DocLayout title={entry.data.title} section="guide">
+  <Content />
+</DocLayout>

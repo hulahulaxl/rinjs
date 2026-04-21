@@ -1,0 +1,43 @@
+---
+title: onUnmount()
+description: API reference for the onUnmount lifecycle hook.
+category: Lifecycle API
+order: 4
+---
+
+# onUnmount()
+
+The `onUnmount()` hook is for cleaning up your mess. It runs exactly once, immediately before your component is removed from the DOM and its resources are garbage collected.
+
+## Usage
+
+You must call `ctx.onUnmount()` during the initial execution of your component function.
+
+```tsx
+import { ComponentContext } from "rin-lib";
+
+export default function MyComponent({}, ctx: ComponentContext) {
+  let interval: any;
+
+  ctx.onMount(() => {
+    interval = setInterval(() => {
+      console.log("Still running...");
+    }, 1000);
+  });
+
+  ctx.onUnmount(() => {
+    console.log("Cleaning up before I leave.");
+    clearInterval(interval);
+  });
+
+  return () => <div>Watch the console</div>;
+}
+```
+
+### Parameters
+
+- **callback**: A function that contains the cleanup logic.
+
+## Why it matters
+
+Since Rin does not use magic proxies to track your side effects, it is completely up to you to stop timers, remove event listeners, or cancel network requests. If you forget, your application will eventually slow down and crash. Rin gives you the tools to be a responsible developer. Use them.
