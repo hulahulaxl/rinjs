@@ -1,4 +1,4 @@
-import { mount, type ComponentContext } from "cuek";
+import { mount, type ComponentContext } from "cuekjs";
 
 function CounterDisplay(props: { count: number }) {
   // We read from props.count inside the render closure so it sees the latest value

@@ -6,7 +6,7 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, "packages/cuek/src/index.ts"),
       name: "Cuek",
-      fileName: "cuek",
+      fileName: "cuekjs",
     },
   },
 });

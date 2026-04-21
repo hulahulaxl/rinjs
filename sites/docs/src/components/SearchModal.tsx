@@ -1,4 +1,4 @@
-import type { ComponentContext } from "cuek";
+import type { ComponentContext } from "cuekjs";
 
 interface SearchResult {
   url: string;

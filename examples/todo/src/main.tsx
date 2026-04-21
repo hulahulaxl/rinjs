@@ -1,4 +1,4 @@
-import { mount, type ComponentContext } from "cuek";
+import { mount, type ComponentContext } from "cuekjs";
 
 type Todo = {
   id: number;
