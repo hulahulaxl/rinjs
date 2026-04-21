@@ -29,7 +29,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           registry-url: "https://registry.npmjs.org"
 
       - name: Setup pnpm
@@ -63,7 +63,7 @@ jobs:
         run: cp README.md packages/rin/README.md
 
       - name: Build Framework
-        run: pnpm run build
+        run: pnpm run build:rin
 
       - name: Publish to NPM
         working-directory: ./packages/rin
