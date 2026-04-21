@@ -23,11 +23,11 @@
     "noUncheckedSideEffectImports": true,
 
     "jsx": "react-jsx",
-    "jsxImportSource": "cuek",
+    "jsxImportSource": "cuekjs",
     "paths": {
-      "cuek": ["../../packages/cuek/src/index.ts"],
-      "cuek/jsx-runtime": ["../../packages/cuek/src/jsx-runtime.ts"],
-      "cuek/jsx-dev-runtime": ["../../packages/cuek/src/jsx-runtime.ts"]
+      "cuekjs": ["../../packages/cuek/src/index.ts"],
+      "cuekjs/jsx-runtime": ["../../packages/cuek/src/jsx-runtime.ts"],
+      "cuekjs/jsx-dev-runtime": ["../../packages/cuek/src/jsx-runtime.ts"]
     }
   },
   "include": ["src"]

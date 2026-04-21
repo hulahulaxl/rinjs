@@ -33,7 +33,7 @@ You need a place for your app to live. A simple `div` with an `id` is all you ne
 This is your actual component. Notice the total lack of `useState` or complex hooks.
 
 ```tsx
-import { ComponentContext } from "cuek";
+import { ComponentContext } from "cuekjs";
 
 interface Props {
   title: string;
@@ -64,7 +64,7 @@ export default function Counter(props: Props, ctx: ComponentContext) {
 The entry point that ties it all together.
 
 ```tsx
-import { mount } from "cuek";
+import { mount } from "cuekjs";
 import Counter from "./Counter";
 
 const root = document.getElementById("app");

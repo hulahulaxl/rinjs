@@ -14,11 +14,11 @@ export default function cuek(): AstroIntegration {
         updateConfig({
           vite: {
             esbuild: {
-              jsxImportSource: "cuek",
+              jsxImportSource: "cuekjs",
               jsx: "automatic",
             },
             optimizeDeps: {
-              include: ["cuek"],
+              include: ["cuekjs"],
             },
           },
         });

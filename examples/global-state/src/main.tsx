@@ -1,4 +1,4 @@
-import { mount, rerender } from "cuek";
+import { mount, rerender } from "cuekjs";
 import { INITIAL_PRODUCTS, cartItems, type Product } from "./store";
 
 function ProductCatalog() {

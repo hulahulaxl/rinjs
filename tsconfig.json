@@ -6,7 +6,7 @@
     "outDir": "dist",
     "skipLibCheck": true,
     "paths": {
-      "cuek": ["./packages/cuek/src"]
+      "cuekjs": ["./packages/cuek/src"]
     },
 
     /* Bundler mode */

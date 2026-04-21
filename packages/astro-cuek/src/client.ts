@@ -1,4 +1,4 @@
-import { mount, jsx } from "cuek";
+import { mount, jsx } from "cuekjs";
 
 export default (element: HTMLElement) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

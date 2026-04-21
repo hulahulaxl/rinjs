@@ -1,4 +1,4 @@
-import { renderToString, jsx } from "cuek";
+import { renderToString, jsx } from "cuekjs";
 
 function check(Component: unknown, _props: Record<string, unknown>, _children: unknown) {
   if (typeof Component !== 'function') return false;
