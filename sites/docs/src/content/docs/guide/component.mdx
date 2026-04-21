@@ -39,7 +39,7 @@ interface Props {
   title: string;
 }
 
-export default function Counter({ title }: Props, ctx: ComponentContext) {
+export default function Counter(props: Props, ctx: ComponentContext) {
   // This is your state. It is just a variable. No hooks. No proxies.
   let count = 0;
 
@@ -51,7 +51,7 @@ export default function Counter({ title }: Props, ctx: ComponentContext) {
 
   return () => (
     <div class="counter">
-      <h2>{title}</h2>
+      <h2>{props.title}</h2>
       <p>Current count: {count}</p>
       <button onclick={increment}>Increment</button>
     </div>
@@ -83,3 +83,30 @@ There are three things you need to understand here. They are simple but fundamen
 3.  **Rerendering**: When you change your data, the DOM has no idea. You have to tell it by calling `ctx.rerender()`. This calls your render function again, compares the result to the previous one, and patches only the parts of the DOM that actually changed.
 
 It is explicit. It is predictable. And it is fast because it does not waste time guesssing what you want.
+
+## The Destructuring Trap
+
+If you are coming from React, you might be tempted to destructure your props at the top of your function:
+
+```tsx
+// ❌ THIS WILL NOT UPDATE
+function Display({ count }) {
+  // You just copied the initial value into a local variable.
+  // It will never change during a rerender.
+  return () => <p>Count: {count}</p>;
+}
+```
+
+Rin components only run **once** when they mount. This creates a closure over the variables in that function. If you destructure a primitive like a number or a string, you are locking in that initial value forever. 
+
+When a component updates, Rin mutates the underlying `props` object reference. To see those changes, your render function must read directly from that reference:
+
+```tsx
+// ✅ DO THIS INSTEAD
+function Display(props) {
+  // We read from the props reference on every render
+  return () => <p>Count: {props.count}</p>;
+}
+```
+
+Rin does not use "magic proxies" to intercept your destructured variables. It is just plain JavaScript doing exactly what you told it to do.
