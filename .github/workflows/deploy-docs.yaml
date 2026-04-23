@@ -26,8 +26,8 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
-      - name: Build Docs Site
-        run: pnpm run build:docs
+      - name: Build Docs and Dependencies
+        run: pnpm run build --filter docs-site...
 
       - name: Publish to Cloudflare Pages
         working-directory: sites/docs
